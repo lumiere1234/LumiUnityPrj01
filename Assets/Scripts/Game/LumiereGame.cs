@@ -1,8 +1,10 @@
+using CoreManager;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Lumiere {
     public int lumi1 = 0;
@@ -13,6 +15,7 @@ public class LumiereGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
         StartGameTest();
     }
 
@@ -29,9 +32,8 @@ public class LumiereGame : MonoBehaviour
         {
             Debug.Log($"Lumiere get Data : {data.mainImg}");
         }
-
         string cubePath = data.path;
-        GameObject go = AssetDatabase.LoadAssetAtPath<GameObject>(cubePath);
+        GameObject go = ResManager.GetInstance().GetAsset(cubePath, typeof(GameObject)) as GameObject; 
         var instance = Instantiate(go);
         instance.transform.parent = transform;
 
@@ -40,6 +42,24 @@ public class LumiereGame : MonoBehaviour
         {
             instance.transform.position = testCfg.position.ToVector3();
         }
+
+        GameObject go2;
+        ResManager.GetInstance().GetAssetAsync(cubePath, typeof(GameObject), (obj) =>
+        {
+            go2 = obj as GameObject;
+            var instance2 = Instantiate(go2);
+            instance2.transform.parent = transform;
+            instance2.name = "Lumiere Obj";
+            instance2.transform.position = Vector3.one * 3;
+        });
+
+        // load main Scene
+        //LoadMainScene();
+    }
+
+    void LoadMainScene()
+    {
+        ResManager.GetInstance().LoadScene("MainScene", null);
     }
 
     void StartGameTest2() 

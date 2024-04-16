@@ -4,7 +4,7 @@ ID;描述;路径;图片;等级;
 1;this is ;AssetPath;main.png;3;
 2;;;;4;
 3;what up?;;tian.png;5;
-4;;Assets/Prefab/LumiCube.prefab;;78;
+4;;Assets/GameRes/Prefab/LumiCube.prefab;;78;
 5;can I help you ;;;5;
 6;;;;345;
 7;Lumiere;;;2;
