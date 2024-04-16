@@ -1,0 +1,5 @@
+﻿sn;desc;path;mainImg;level;position;
+int;string;string;string;int;float[];
+ID;描述;路径;图片;等级;位置;
+13;this is ;AssetPath;main.png;3;12,14, 223;
+15;;;;4;;

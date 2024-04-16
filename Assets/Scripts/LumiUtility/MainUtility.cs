@@ -77,9 +77,9 @@ public static class MainUtility
         sw.WriteLine("public partial class " + fileName + ": GameConfigDataBase");
         sw.WriteLine("{");
 
-        string[] nameList = fileData[0].Split(',');
-        string[] typeList = fileData[1].Split(',');
-        string[] descList = fileData[2].Split(',');
+        string[] nameList = fileData[0].Split(';');
+        string[] typeList = fileData[1].Split(';');
+        string[] descList = fileData[2].Split(';');
         if(nameList.Length == typeList.Length)
         {
             for(int i = 0; i < nameList.Length - 1; i++)

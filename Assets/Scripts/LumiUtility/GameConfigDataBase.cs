@@ -3,10 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
-using UnityEditor;
-using UnityEngine;
 
 public class GameConfigDataBase
 {
@@ -15,7 +14,6 @@ public class GameConfigDataBase
         return "";
     }
     static Dictionary<string, Dictionary<string, GameConfigDataBase>> dataDic = new Dictionary<string, Dictionary<string, GameConfigDataBase>>();
-
     public static T GetConfigData<T>(string key, string fileName = null) where T : GameConfigDataBase
     {
         Type setT = typeof(T);
@@ -68,15 +66,15 @@ public class GameConfigDataBase
                     strLine = strLine.Trim();
                     if (count == 0)
                     {
-                        nameLine = strLine.Split(',');
+                        nameLine = strLine.Split(';');
                     }
                     else if(count == 1)
                     {
-                        typeLine = strLine.Split(",");
+                        typeLine = strLine.Split(';');
                     }
                     else if(count > 2)
                     {
-                        anyLine = strLine.Split(",");
+                        anyLine = strLine.Split(';');
                         T configData = Activator.CreateInstance<T>();
                         Type type = typeof(T);
 
@@ -91,6 +89,25 @@ public class GameConfigDataBase
                             else if(curType == "string")
                             {
                                 type.GetField(curName).SetValue(configData, anyLine[i]);
+                            }
+                            else if(curType == "float")
+                            {
+                                type.GetField(curName).SetValue(configData, float.Parse(anyLine[i]));
+                            }
+                            else if(curType == "float[]")
+                            {
+                                float[] floats = StringUtility.SplitStringByType<float>(anyLine[i], ",");
+                                type.GetField(curName).SetValue(configData, floats);
+                            }
+                            else if (curType == "int[]")
+                            {
+                                int[] ints = StringUtility.SplitStringByType<int>(anyLine[i], ",");
+                                type.GetField(curName).SetValue(configData, ints);
+                            }
+                            else if (curType == "string[]")
+                            {
+                                string[] strs = StringUtility.SplitString(anyLine[i], ",");
+                                type.GetField(curName).SetValue(configData, strs);
                             }
                         }
                         curCfg.Add(anyLine[0], configData);

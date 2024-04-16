@@ -258,8 +258,8 @@ public class ExcelUtility
 			{
 				for (int low = 0; low < colCount; low++)
 				{
-					//使用","分割每一个数值
-					stringBuilder.Append(mSheet.Rows[row][low] + ",");
+					//使用";"分割每一个数值
+					stringBuilder.Append(mSheet.Rows[row][low] + ";");
 				}
 				//使用换行符分割每一行
 				stringBuilder.Append("\r\n");
