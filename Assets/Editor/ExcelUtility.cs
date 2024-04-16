@@ -163,7 +163,6 @@ public class ExcelUtility
 				textWriter.Write (stringBuilder.ToString ());
 			}
 		}
-
 	}
 
 	/// <summary>

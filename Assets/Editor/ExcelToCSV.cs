@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System.Text;
+using CoreManager;
 
 public class ExcelToCSV : Editor
 {
@@ -11,29 +12,32 @@ public class ExcelToCSV : Editor
     public static void DoExcelToCSV()
     {
         // clear all files
-        MainUtility.ClearAllFile(MainUtility.TargetDir);
-        MainUtility.ClearAllFile(MainUtility.ConfigClassDir);
-        MainUtility.CheckAndCreateDir(MainUtility.TargetDir);
-        MainUtility.CheckAndCreateDir(MainUtility.ConfigClassDir);
-
-        FileInfo[] files = MainUtility.GetFiles(MainUtility.ExcelDir, "*.xlsx");
+        MainUtility.ClearAllFile(PathDefine.TargetDir);
+        MainUtility.ClearAllFile(PathDefine.ConfigClassDir);
+        
+        FileInfo[] files = MainUtility.GetFiles(PathDefine.ExcelDir, "*.xlsx");
         for (int i = 0; i < files.Length; i++)
         {
             ExcelUtility eu = new ExcelUtility(files[i].FullName);
             Encoding encoding = Encoding.GetEncoding("utf-8");
-            eu.ConvertAllSheetToCSV(MainUtility.TargetDir, encoding);
+            eu.ConvertAllSheetToCSV(PathDefine.TargetDir, encoding);
         }
 
         AssetDatabase.Refresh();
         Debug.Log("Lumiere ExcelToCSV success!");
+
+        DoCreateCSConfig();
     }
     [MenuItem("Tools/Excel/Create Config Class")]
     public static void DoCreateCSConfig()
     {
-        FileInfo[] csvFiles = MainUtility.GetFiles(MainUtility.TargetDir, "*.csv");
+        MainUtility.CheckAndCreateDir(PathDefine.TargetDir);
+        MainUtility.CheckAndCreateDir(PathDefine.ConfigClassDir);
+
+        FileInfo[] csvFiles = MainUtility.GetFiles(PathDefine.TargetDir, "*.csv");
         for (int i = 0; i < csvFiles.Length; i++)
         {
-            MainUtility.CreateConfigFile(csvFiles[i], MainUtility.ConfigClassDir);
+            MainUtility.CreateConfigFile(csvFiles[i], PathDefine.ConfigClassDir);
         }
         AssetDatabase.Refresh();
         Debug.Log("Lumiere Generate Config Class success!");

@@ -7,6 +7,16 @@ namespace CoreManager
 {
     public static class PathDefine
     {
+        // Excel file path
+        public static string ExcelDir => $"{Directory.GetParent(Application.dataPath)}/Configs";
+        // CSV file Path
+        public static string TargetDir => $"{Application.dataPath}/ConfigCSV";
+        // CSV->C# file Path
+        public static string ConfigClassDir => $"{Application.dataPath}/Scripts/ConfigClass";
+        public static string GetAssetPath(string path)
+        {
+            return path.Substring(path.IndexOf("Assets"));
+        }
         public static string MainABName
         {
             get
@@ -24,19 +34,5 @@ namespace CoreManager
         {
             get { return Directory.GetParent(Application.dataPath).Name + "/AssetBundles/" + MainABName; }
         }
-    }
-}
-public class PathDefine : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

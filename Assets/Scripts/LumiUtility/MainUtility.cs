@@ -8,13 +8,6 @@ using System.Xml;
 
 public static class MainUtility
 {
-    // Excel file path
-    public static string ExcelDir => $"{Directory.GetParent(Application.dataPath)}/Configs";
-    // CSV file Path
-    public static string TargetDir => $"{Application.dataPath}/ConfigCSV";
-    // CSV->C# file Path
-    public static string ConfigClassDir => $"{Application.dataPath}/Scripts/ConfigClass";
-
     public static FileInfo[] GetFiles(string path, string pattern = "*")
     {
         if (!Directory.Exists(path)) {
@@ -62,7 +55,6 @@ public static class MainUtility
             directory.Create();
         }
     }
-
     /// <summary>
     /// 创建C#配置表文件
     /// </summary>
@@ -73,8 +65,7 @@ public static class MainUtility
 
         int index = csvFile.Name.LastIndexOf(".");
         string fileName = csvFile.Name.Substring(0, index);
-        string className = "Conf" + fileName;
-        string confClassPath = $"{targetDir}/{className}.cs";
+        string confClassPath = $"{targetDir}/{fileName}.cs";
 
         List<string> fileData;
         ReadCsvFileTitle(csvFile.FullName, out fileData);
@@ -83,7 +74,7 @@ public static class MainUtility
 
         StreamWriter sw = new StreamWriter(confClassPath);
         sw.WriteLine("using UnityEngine;\nusing System.Collections;\n");
-        sw.WriteLine("public partial class " + className + ": GameConfigDataBase");
+        sw.WriteLine("public partial class " + fileName + ": GameConfigDataBase");
         sw.WriteLine("{");
 
         string[] nameList = fileData[0].Split(',');
