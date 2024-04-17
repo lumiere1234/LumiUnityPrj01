@@ -3,11 +3,11 @@ using System.Collections;
 
 public partial class SceneDataCfg: GameConfigDataBase
 {
-	public string sn; // sceneName
-	public string desc; // 描述
-	public string path; // 路径
-	public string mainImg; // 图片
-	public int levelLimit; // 等级限制
+	public string sn; // MainScene
+	public string desc; // 游戏主场景
+	public string path; // AssetPath/GameRes/Scene/MainScene.unity
+	public string mainImg; // 
+	public int levelLimit; // 0
 	protected override string getFilePath()
 	{
 		return "SceneDataCfg";

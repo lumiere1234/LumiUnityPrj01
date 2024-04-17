@@ -3,12 +3,12 @@ using System.Collections;
 
 public partial class LastCfg: GameConfigDataBase
 {
-	public int sn; // ID
-	public string name; // 名称
-	public string mainImg; // 图片
-	public int level; // 等级
-	public int Atk; // 攻击力
-	public int Def; // 防御力
+	public int sn; // 1
+	public string name; // AssetPath
+	public string mainImg; // main.png
+	public int level; // 31
+	public int Atk; // 24
+	public int Def; // 26
 	protected override string getFilePath()
 	{
 		return "LastCfg";

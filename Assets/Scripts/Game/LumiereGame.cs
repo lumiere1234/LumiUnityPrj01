@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.U2D;
+using UnityEngine.UIElements;
 
 public class Lumiere {
     public int lumi1 = 0;
@@ -16,13 +18,40 @@ public class LumiereGame : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-        StartGameTest();
+        //TestAtlas();
+        LoadUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+       
+    }
+
+    void LoadUI()
+    {
+        UIManager.GetInstance().ShowPanel("UI-MainPlayer");
+    }
+
+    void TestAtlas()
+    {
+        string assetKey = "Assets/GameRes/ImgAtlas/ImgScreen.spriteatlasv2";
+        SpriteAtlas atlas = ResManager.GetInstance().GetAsset(assetKey, typeof(SpriteAtlas)) as SpriteAtlas;
+        if (atlas != null)
+        {
+            Sprite[] sss = new Sprite[atlas.spriteCount];
+            atlas.GetSprites(sss);
+            foreach(var sprite in sss)
+            {
+                Debug.Log($"{sprite.name}");
+            }
+        }
+
+        Sprite target = atlas.GetSprite("BG01");
+        if (target != null)
+        {   
+
+        }
     }
     
     void StartGameTest()

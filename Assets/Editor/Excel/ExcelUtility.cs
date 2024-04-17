@@ -256,10 +256,12 @@ public class ExcelUtility
 			//读取数据
 			for (int row = 0; row < rowCount; row++)
 			{
-				for (int low = 0; low < colCount; low++)
+				if (row == 2)
+					continue;
+				for (int col = 0; col < colCount; col++)
 				{
 					//使用";"分割每一个数值
-					stringBuilder.Append(mSheet.Rows[row][low] + ";");
+					stringBuilder.Append(mSheet.Rows[row][col] + ";");
 				}
 				//使用换行符分割每一行
 				stringBuilder.Append("\r\n");

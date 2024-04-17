@@ -6,6 +6,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using UnityEngine.U2D;
+using UnityEngine.Windows.Speech;
 using Object = UnityEngine.Object;
 
 namespace CoreManager
@@ -28,6 +30,13 @@ namespace CoreManager
 #else
             curType = ResType.AssetBundle;
 #endif
+            // 初始化图集
+            InitSpriteAtlas();
+        }
+
+        private void Start()
+        {
+
         }
         /// <summary>
         /// 获取普通资源
@@ -44,7 +53,7 @@ namespace CoreManager
 #else
             // todo add assetbundle
 #endif
-            if (asset == null) {
+            if (asset != null) {
                 CoreResource coreRes = new CoreResource(curType, assetKey, asset);
                 AssetListRes.Add(assetKey, coreRes);
             }
@@ -59,22 +68,33 @@ namespace CoreManager
         public void GetAssetAsync(string assetKey, Type type, Action<Object> loadFunc)
         {
 #if UNITY_EDITOR
-            StartCoroutine(DoGetAssetAsync(assetKey, type, loadFunc));   
+            StartCoroutine(DoGetAssetEditorAsync(assetKey, type, loadFunc));   
 #else
             // todo load from assetbundle
 #endif 
         }
 
-        IEnumerator DoGetAssetAsync(string assetKey, Type type, Action<Object> loadFunc)
+        IEnumerator DoGetAssetEditorAsync(string assetKey, Type type, Action<Object> loadFunc)
         {
-            string requestPath = $"{Directory.GetParent(Application.dataPath)}/{assetKey}";
-            UnityWebRequest req = UnityWebRequest.Get(requestPath);
-            yield return req.SendWebRequest();
-            byte[] data = req.downloadHandler.data;
-
-            //if (req.isDone) {req.downloadHandler.data
-            //    loadFunc(req.downloadHandler.data);
-            //}
+            Object asset = null;
+            if (AssetListRes.ContainsKey(assetKey))
+            {
+                asset = AssetListRes[assetKey].Asset;
+            }
+            if (asset == null)
+            {
+                asset = AssetDatabase.LoadAssetAtPath(assetKey, type);
+            }
+            if (asset != null)
+            {
+                CoreResource coreRes = new CoreResource(curType, assetKey, asset);
+                AssetListRes.Add(assetKey, coreRes);
+            }
+            yield return null;
+            if (loadFunc != null)
+            {
+                loadFunc.Invoke(asset);
+            }
         }
 
         /// <summary>
@@ -95,6 +115,67 @@ namespace CoreManager
                 callBack();
             yield return Resources.UnloadUnusedAssets();
         }
+
+        #region Sprite
+        private Dictionary<string, SpriteAtlas> atlasList = new Dictionary<string, SpriteAtlas>();
+        private Dictionary<string, string> spriteNameDict = new Dictionary<string, string>();
+        public Sprite LoadSprite(string spriteName, string atlasName)
+        {
+            Sprite sprite = GetAtlasByName(atlasName)?.GetSprite(spriteName);
+            if (sprite != null && !spriteNameDict.ContainsKey(spriteName))
+            {
+                spriteNameDict.Add(spriteName, atlasName);
+            }
+            return sprite;
+        }
+        public Sprite LoadSprite(string spriteName)
+        {
+            Sprite sprite = null;
+#if UNITY_EDITOR
+            if (spriteNameDict.ContainsKey(spriteName))
+            {
+                return GetAtlasByName(spriteNameDict[spriteName])?.GetSprite(spriteName);
+            }
+
+            foreach (var atlas in atlasList)
+            {
+                sprite = atlas.Value.GetSprite(spriteName);
+                if (sprite != null)
+                {
+                    spriteNameDict.Add(spriteName, atlas.Key);
+                    break;
+                }
+            }
+#else
+            // todo find sprite from assetbundle
+#endif
+            return sprite;
+        }
+        private void InitSpriteAtlas()
+        {
+            spriteNameDict.Clear();
+            atlasList.Clear();
+            if(!Directory.Exists(PathDefine.AtlasBaseDir))
+            {
+                return;
+            }
+            string[] allAtlas = Directory.GetFiles(PathDefine.AtlasBaseDir, "*.spriteatlasv2");
+            foreach(var atlas in allAtlas)
+            {
+                string atlasPath = atlas.Substring(atlas.LastIndexOf("Assets"));
+                SpriteAtlas sa = GetAsset(atlasPath, typeof(SpriteAtlas)) as SpriteAtlas;
+                atlasList[sa.name] = sa;
+            }
+        }
+        private SpriteAtlas GetAtlasByName(string name)
+        {
+            if(atlasList.ContainsKey(name))
+            {
+                return atlasList[name];
+            }
+            return null;
+        }
+        #endregion
         public void ClearAllAsset()
         {
             AssetListRes.Clear();

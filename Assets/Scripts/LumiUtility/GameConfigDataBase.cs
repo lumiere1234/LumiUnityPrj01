@@ -72,7 +72,7 @@ public class GameConfigDataBase
                     {
                         typeLine = strLine.Split(';');
                     }
-                    else if(count > 2)
+                    else if(count > 1)
                     {
                         anyLine = strLine.Split(';');
                         T configData = Activator.CreateInstance<T>();

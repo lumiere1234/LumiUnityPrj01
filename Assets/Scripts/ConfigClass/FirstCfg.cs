@@ -3,11 +3,11 @@ using System.Collections;
 
 public partial class FirstCfg: GameConfigDataBase
 {
-	public int sn; // ID
-	public string desc; // 描述
-	public string path; // 路径
-	public string mainImg; // 图片
-	public int level; // 等级
+	public int sn; // 1
+	public string desc; // this is 
+	public string path; // AssetPath
+	public string mainImg; // main.png
+	public int level; // 3
 	protected override string getFilePath()
 	{
 		return "FirstCfg";

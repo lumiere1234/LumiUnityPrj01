@@ -13,6 +13,8 @@ namespace CoreManager
         public static string TargetDir => $"{Application.dataPath}/ConfigCSV";
         // CSV->C# file Path
         public static string ConfigClassDir => $"{Application.dataPath}/Scripts/ConfigClass";
+        public static string AtlasBaseDir => $"{Application.dataPath}/GameRes/ImgAtlas";
+        public static string SpriteBaseDir => $"{Application.dataPath}/Texture";
         public static string GetAssetPath(string path)
         {
             return path.Substring(path.IndexOf("Assets"));

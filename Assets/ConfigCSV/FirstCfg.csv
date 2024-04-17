@@ -1,6 +1,5 @@
 ﻿sn;desc;path;mainImg;level;
 int;string;string;string;int;
-ID;描述;路径;图片;等级;
 1;this is ;AssetPath;main.png;3;
 2;;;;4;
 3;what up?;;tian.png;5;
