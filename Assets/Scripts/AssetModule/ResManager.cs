@@ -32,6 +32,7 @@ namespace CoreManager
 #endif
             // ³õÊ¼»¯Í¼¼¯
             InitSpriteAtlas();
+            EventManager.GetInstance().Register(EventDef.SceneLoadCompleteEvent, OnSceneLoadedComplete);
         }
 
         private void Start()
@@ -180,6 +181,15 @@ namespace CoreManager
         {
             AssetListRes.Clear();
             ABManager.GetInstance().ClearAllAssetBundle();
+        }
+        private void OnDestroy()
+        {
+            EventManager.GetInstance().UnRegister(EventDef.SceneLoadCompleteEvent, OnSceneLoadedComplete);
+        }
+        // event
+        private void OnSceneLoadedComplete(params object[] args)
+        {
+            
         }
     }
 }

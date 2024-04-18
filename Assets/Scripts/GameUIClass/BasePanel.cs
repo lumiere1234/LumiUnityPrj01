@@ -4,16 +4,41 @@ using UnityEngine;
 
 public class BasePanel : MonoBehaviour
 {
-    public Canvas canvas;
+    public GUIConfig uiCfg;
+
+    public virtual void Initial(params object[] args)
+    {
+
+    }
+
+    protected virtual void Awake()
+    {
+
+    }
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         
     }
-
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         
+    }
+    protected virtual void LateUpdate()
+    {
+
+    }
+    protected virtual void OnEnable()
+    {
+
+    }
+    protected virtual void OnDisable()
+    {
+
+    }
+    protected virtual void OnDestroy()
+    {
+
     }
 }
