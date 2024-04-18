@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 7862121097279729856}
   - component: {fileID: 8896903469762312438}
   - component: {fileID: 8190419618755363737}
+  - component: {fileID: 5682073216497785894}
   m_Layer: 5
   m_Name: UI-MainPlayer
   m_TagString: Untagged
@@ -110,7 +111,7 @@ RectTransform:
   m_Children:
   - {fileID: 1337044410509930543}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -192,3 +193,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   imgBG: {fileID: 1256076536066355787}
+--- !u!114 &5682073216497785894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8328371632565240400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca86f2dd48e20864ab638303edbbebcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 0}

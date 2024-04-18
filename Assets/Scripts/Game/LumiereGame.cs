@@ -1,7 +1,5 @@
 using CoreManager;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,7 +17,8 @@ public class LumiereGame : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         //TestAtlas();
-        LoadUI();
+        LoadMainScene();
+        //LoadUI();
     }
 
     // Update is called once per frame
@@ -27,12 +26,6 @@ public class LumiereGame : MonoBehaviour
     {
        
     }
-
-    void LoadUI()
-    {
-        UIManager.GetInstance().ShowPanel("UI-MainPlayer");
-    }
-
     void TestAtlas()
     {
         string assetKey = "Assets/GameRes/ImgAtlas/ImgScreen.spriteatlasv2";
@@ -82,13 +75,14 @@ public class LumiereGame : MonoBehaviour
             instance2.transform.position = Vector3.one * 3;
         });
 
-        // load main Scene
+        //load main Scene
         //LoadMainScene();
     }
 
     void LoadMainScene()
     {
-        ResManager.GetInstance().LoadScene("MainScene", null);
+        //ResManager.GetInstance().LoadScene("MainScene", null);
+        SceneMgr.GetInstance().LoadScene("MainScene");
     }
 
     void StartGameTest2() 
