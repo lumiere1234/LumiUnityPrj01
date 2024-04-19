@@ -19,6 +19,6 @@ public class MainScene : MonoBehaviour
 
     void LoadUI()
     {
-        UIManager.GetInstance().ShowPanel("UI-MainPlayer", 25);
+        UIMgr.GetInstance().ShowPanel("UI-MainPlayer", 25);
     }
 }

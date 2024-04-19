@@ -26,7 +26,7 @@ public class SceneMgr : SingletonAutoMono<SceneMgr>
         if (currentInfo.IsValid)
         {
             ResManager.GetInstance().LoadScene(sceneName, () => {
-                EventManager.GetInstance().Invoke(EventDef.SceneLoadCompleteEvent);
+                EventMgr.GetInstance().Invoke(EventDef.SceneLoadCompleteEvent);
                 callBack?.Invoke();
                 });
         }

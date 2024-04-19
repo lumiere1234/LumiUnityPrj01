@@ -40,13 +40,13 @@ class EventData {
 
         if (events.Count == 0)
         {
-            EventManager.GetInstance().RemoveKey(eventType);
+            EventMgr.GetInstance().RemoveKey(eventType);
         }
     }
 }
 
 public delegate void EventInfo(params object[] args);
-public class EventManager : SingletonAutoMono<EventManager>
+public class EventMgr : SingletonAutoMono<EventMgr>
 {
     private Dictionary<EventDef, EventData> EventDict = new Dictionary<EventDef, EventData>();
     public void Register(EventDef eType, EventInfo eventInfo)

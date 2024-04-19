@@ -1,10 +1,7 @@
 using CoreManager;
-using Newtonsoft.Json.Serialization;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : SingletonAutoMono<UIManager>
+public class UIMgr : SingletonAutoMono<UIMgr>
 {
     private GameObject _root = null;
     public GameObject UIRoot { get
@@ -18,11 +15,11 @@ public class UIManager : SingletonAutoMono<UIManager>
 
     private void Awake()
     {
-        EventManager.GetInstance().Register(EventDef.SceneLoadCompleteEvent, OnSceneLoadedComplete);
+        EventMgr.GetInstance().Register(EventDef.SceneLoadCompleteEvent, OnSceneLoadedComplete);
     }
     private void OnDestroy()
     {
-        EventManager.GetInstance().UnRegister(EventDef.SceneLoadCompleteEvent, OnSceneLoadedComplete);
+        EventMgr.GetInstance().UnRegister(EventDef.SceneLoadCompleteEvent, OnSceneLoadedComplete);
     }
     public void ShowPanel(string uiName, params object[] args)
     {

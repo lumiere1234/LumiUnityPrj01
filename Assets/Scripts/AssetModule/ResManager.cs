@@ -32,7 +32,7 @@ namespace CoreManager
 #endif
             // ³õÊ¼»¯Í¼¼¯
             InitSpriteAtlas();
-            EventManager.GetInstance().Register(EventDef.SceneLoadCompleteEvent, OnSceneLoadedComplete);
+            EventMgr.GetInstance().Register(EventDef.SceneLoadCompleteEvent, OnSceneLoadedComplete);
         }
 
         private void Start()
@@ -184,7 +184,7 @@ namespace CoreManager
         }
         private void OnDestroy()
         {
-            EventManager.GetInstance().UnRegister(EventDef.SceneLoadCompleteEvent, OnSceneLoadedComplete);
+            EventMgr.GetInstance().UnRegister(EventDef.SceneLoadCompleteEvent, OnSceneLoadedComplete);
         }
         // event
         private void OnSceneLoadedComplete(params object[] args)

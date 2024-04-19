@@ -26,25 +26,43 @@ public class UI_MainScene : BasePanel
 
     }
 
+    private int Timer = 0;
     // Start is called before the first frame update
     protected override void Start()
     {
         
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        EventManager.GetInstance().Register(EventDef.LumiFirstEvent, LumiEventFunc);
+        base.OnEnable();
+        StartTimer();
     }
 
-    private void OnDisable()
+    private void StartTimer()
     {
-        EventManager.GetInstance().UnRegister(EventDef.LumiFirstEvent, LumiEventFunc);
+        ClearTimer();
+        Timer = TimerMgr.GetInstance().CreateTimer(DoTimerAction, new TimerData(2));
+    }
+
+    private void ClearTimer()
+    {
+        if (Timer > 0)
+        {
+            TimerMgr.GetInstance().RemoveTimer(Timer);
+            Timer = 0;
+        }
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        ClearTimer();
     }
 
     private void RefreshPanel()
     {
-        txtLumi.text = $"Lumiere {TargetId}";
+        txtLumi.text = string.Format(StringDef.MainTips2, TargetId);
     }
 
     // Update is called once per frame
@@ -52,8 +70,13 @@ public class UI_MainScene : BasePanel
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            EventManager.GetInstance().Invoke(EventDef.LumiFirstEvent, 100);
+            EventMgr.GetInstance().Invoke(EventDef.LumiFirstEvent, 100);
         }
+    }
+
+    void DoTimerAction()
+    {
+        Debug.Log("Lumiere get Action");
     }
 
     // Event part
