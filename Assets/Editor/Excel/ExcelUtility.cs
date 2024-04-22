@@ -237,7 +237,7 @@ public class ExcelUtility
     /// <summary>
     /// 全部转换为CSV
     /// </summary>
-    public void ConvertAllSheetToCSV(string CSVDirPath, Encoding encoding)
+    public void ConvertAllSheetToCSV(string excelName, string CSVDirPath, Encoding encoding)
     {
         for (int i = 0; i < mResultSet.Tables.Count; i++)
 		{
@@ -252,7 +252,7 @@ public class ExcelUtility
 
 			//创建一个StringBuilder存储数据
 			StringBuilder stringBuilder = new StringBuilder();
-
+			stringBuilder.AppendLine($"ExcelName: {excelName}");
 			//读取数据
 			for (int row = 0; row < rowCount; row++)
 			{

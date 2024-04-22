@@ -20,5 +20,6 @@ public class MainScene : MonoBehaviour
     void LoadUI()
     {
         UIMgr.GetInstance().ShowPanel("UI-MainPlayer", 25);
+        UIMgr.GetInstance().ShowPanel("UI-TestPanel");
     }
 }

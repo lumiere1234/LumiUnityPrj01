@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using CoreManager;
+using UnityEditor;
 
-public class WindowsBuilder : MonoBehaviour
+public class WindowsBuilder : AssetBundleBuilder<WindowsBuilder>
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void DoBuildAssetBundle()
     {
-        
+        base.DoBuildAssetBundle();
     }
-
-    // Update is called once per frame
-    void Update()
+    public override void DoBuildAction()
     {
-        
+        string bundleMainDir = $"{PathDefine.BundleBaseDir}/{PathDefine.BundleSubWindow}";
+        AssetBundleBuild[] buildMap = assetBundleBuilds.ToArray();
+        BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression;
+        BuildPipeline.BuildAssetBundles(bundleMainDir, buildMap, options, BuildTarget.StandaloneWindows64);
+        AssetDatabase.Refresh();
     }
 }

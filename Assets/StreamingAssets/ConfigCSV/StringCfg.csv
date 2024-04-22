@@ -1,0 +1,5 @@
+﻿ExcelName: String.xlsx
+sn;str;;
+int;string;;
+10001;Lumiere Tips;第一个文本配置;
+10002;Lumiere Tips {0};第一个带参数文本配置;

@@ -66,13 +66,17 @@ public class GameConfigDataBase
                     strLine = strLine.Trim();
                     if (count == 0)
                     {
+                        ;
+                    }
+                    else if (count == 1)
+                    {
                         nameLine = strLine.Split(';');
                     }
-                    else if(count == 1)
+                    else if(count == 2)
                     {
                         typeLine = strLine.Split(';');
                     }
-                    else if(count > 1)
+                    else if(count > 2)
                     {
                         anyLine = strLine.Split(';');
                         T configData = Activator.CreateInstance<T>();

@@ -13,6 +13,7 @@ public class SingletonAutoMono<T> : MonoBehaviour where T : MonoBehaviour
             go.name = typeof(T).Name;
             DontDestroyOnLoad(go);
             instance = go.AddComponent<T>();
+            go.hideFlags = HideFlags.HideInHierarchy;
         }
         return instance;
     }

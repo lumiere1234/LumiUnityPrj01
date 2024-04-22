@@ -1,6 +1,4 @@
 using CoreManager;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Main : MonoBehaviour
@@ -9,10 +7,18 @@ public class Main : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        InitData();
         //TestAtlas();
         LoadMainScene();
         //LoadUI();
     }
+    // 初始化数据结构
+    void InitData()
+    {
+        CameraMgr.GetInstance().InitCamera();
+        ResManager.GetInstance().InitRes();
+    }
+
     void LoadMainScene()
     {
         //ResManager.GetInstance().LoadScene("MainScene", null);

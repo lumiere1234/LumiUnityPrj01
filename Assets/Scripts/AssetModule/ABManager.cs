@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Object = UnityEngine.Object;
 
 namespace CoreManager
 {
@@ -91,11 +93,11 @@ namespace CoreManager
         }
         #endregion
         #region Load Async
-        public void LoadResAsync(string abName, string resName, UnityAction<Object> callback)
+        public void LoadResAsync(string abName, string resName, Action<Object> callback)
         {
             StartCoroutine(ReallyLoadResAsync(abName, resName, callback));
         }
-        private IEnumerator ReallyLoadResAsync(string abName, string resName, UnityAction<Object> callback)
+        private IEnumerator ReallyLoadResAsync(string abName, string resName, Action<Object> callback)
         {
             LoadAB(abName);
 
@@ -109,11 +111,11 @@ namespace CoreManager
 
             callback(abr.asset);
         }
-        public void LoadResAsync(string abName, string resName, System.Type type, UnityAction<Object> callback)
+        public void LoadResAsync(string abName, string resName, System.Type type, Action<Object> callback)
         {
             ReallyLoadResAsync(abName, resName, type, callback);
         }
-        private IEnumerator ReallyLoadResAsync(string abName, string resName, System.Type type, UnityAction<Object> callback)
+        private IEnumerator ReallyLoadResAsync(string abName, string resName, System.Type type, Action<Object> callback)
         {
             LoadAB(abName);
             if (!abDict.ContainsKey(abName)) yield break;

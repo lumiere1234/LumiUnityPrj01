@@ -1,11 +1,13 @@
+// ExcelName: Gui.xlsx
 using UnityEngine;
 using System.Collections;
 
 public partial class GUIConfig: GameConfigDataBase
 {
-	public string sn; // UI-MainPlayer
-	public string path; // Assets/GameRes/GameUI/UI-MainPlayer.prefab
-	public int sortingType; // 1
+	public string sn;
+	public string path;
+	public int sortingType;
+	public double destroyTime;
 	protected override string getFilePath()
 	{
 		return "GUIConfig";

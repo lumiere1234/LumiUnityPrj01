@@ -1,9 +1,0 @@
-﻿sn;name;mainImg;level;Atk;Def;
-int;string;string;int;int;int;
-1;AssetPath;main.png;31;24;26;
-2;;;41;30;24;
-3;lumis;tian.png;51;36;22;
-4;;;78;42;20;
-5;;lumi.png;51;48;18;
-6;dasdf.prefab;;345;54;16;
-7;;;21;60;14;

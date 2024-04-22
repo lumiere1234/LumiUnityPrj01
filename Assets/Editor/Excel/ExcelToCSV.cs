@@ -20,7 +20,7 @@ public class ExcelToCSV : Editor
         {
             ExcelUtility eu = new ExcelUtility(files[i].FullName);
             Encoding encoding = Encoding.GetEncoding("utf-8");
-            eu.ConvertAllSheetToCSV(PathDefine.TargetDir, encoding);
+            eu.ConvertAllSheetToCSV(files[i].Name, PathDefine.TargetDir, encoding);
         }
 
         AssetDatabase.Refresh();

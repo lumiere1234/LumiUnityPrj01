@@ -1,0 +1,5 @@
+﻿ExcelName: Scene.xlsx
+sn;desc;path;mainImg;levelLimit;
+string;string;string;string;int;
+MainScene;游戏主场景;AssetPath/GameRes/Scene/MainScene.unity;;0;
+FirstStage;第一个关卡;AssetPath/GameRes/Scene/FirstStage.unity;main.png;3;

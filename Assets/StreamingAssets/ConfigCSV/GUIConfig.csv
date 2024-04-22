@@ -1,0 +1,7 @@
+﻿ExcelName: Gui.xlsx
+sn;path;sortingType;destroyTime;
+string;string;int;double;
+UI-MainPlayer;Assets/GameRes/GameUI/UI-MainPlayer.prefab;1;60;
+UI-TestPanel;Assets/GameRes/GameUI/UI-TestPanel.prefab;1;60;
+UI-MainTips;Assets/GameRes/GameUI/UI-MainTips.prefab;3;20;
+UI-Dialog;Assets/GameRes/GameUI/UI-Dialog.prefab;2;60;

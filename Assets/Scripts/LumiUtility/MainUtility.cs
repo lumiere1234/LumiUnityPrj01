@@ -73,19 +73,20 @@ public static class MainUtility
             return;
 
         StreamWriter sw = new StreamWriter(confClassPath);
+        sw.WriteLine($"// {fileData[0]}");
         sw.WriteLine("using UnityEngine;\nusing System.Collections;\n");
         sw.WriteLine("public partial class " + fileName + ": GameConfigDataBase");
         sw.WriteLine("{");
 
-        string[] nameList = fileData[0].Split(';');
-        string[] typeList = fileData[1].Split(';');
-        string[] descList = fileData[2].Split(';');
+        string[] nameList = fileData[1].Split(';');
+        string[] typeList = fileData[2].Split(';');
+        //string[] descList = fileData[3].Split(';');
         if(nameList.Length == typeList.Length)
         {
             for(int i = 0; i < nameList.Length - 1; i++)
             {
                 if (nameList[i].Length > 0 && typeList[i].Length > 0)
-                    sw.WriteLine($"\tpublic {typeList[i]} {nameList[i]}; // {descList[i]}");
+                    sw.WriteLine($"\tpublic {typeList[i]} {nameList[i]};"); // {descList[i]}");
             }
         }
         sw.WriteLine($"\tprotected override string getFilePath()");

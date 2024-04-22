@@ -39,4 +39,22 @@ public static class StringUtility
         }
         return splitStr;
     }
+    public static string GetPureName(string path)
+    {
+        int startIndex = path.LastIndexOf('/') + 1;
+        int length = path.LastIndexOf('.') - startIndex;
+        return path.Substring(startIndex, length);
+    }
+    public static string GetAssetPathStringTrans(string path)
+    {
+        string ret = path.Replace(@"\", "/");
+        return ret;
+    }
+    public static string GetStringById(int id, params object[] args)
+    {
+        StringCfg cfg = GameConfigDataBase.GetConfigData<StringCfg>(id.ToString());
+        if (cfg == null)
+            return "";
+        return string.Format(cfg.str, args);
+    }
 }
