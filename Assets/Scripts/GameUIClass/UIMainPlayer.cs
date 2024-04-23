@@ -103,10 +103,6 @@ public class UIMainPlayer : BasePanel
         UIMgr.GetInstance().HidePanel(uiName);
     }
     // Event part
-    void LumiEventFunc(params object[] args)
-    {
-        Debug.Log("CheckLumiFunc");
-    }
     void LumiEventWithParam(params object[] args)
     {
         if (args.Length >= 1)

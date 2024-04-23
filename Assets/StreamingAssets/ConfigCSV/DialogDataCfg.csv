@@ -1,8 +1,15 @@
 ﻿ExcelName: DialogData.xlsx
-sn;character;dialogStr;nextDialog;autoTime;
-int;int;string;int;float;
-10001;10001;Lumiere First Dialog;10002;5;
-10002;10003;Lumiere Second Dialog;10003;5;
-10003;10005;Lumiere Third Dialog;10004;5;
-10004;10004;Lumiere Fourth Dialog;10005;5;
-10005;10009;Lumiere Fifth Dialog;0;5;
+sn;dialogStr;speakerType;character;nextDialog;autoTime;action;
+int;string;int;int;int;float;string;
+10001;Lumiere First Dialog;1;10001;10002;5;;
+10002;Lumiere Second Dialog;1;10003;10003;5;;
+10003;Lumiere Third Dialog;1;10005;10004;5;;
+10004;Lumiere Fourth Dialog;1;10004;10005;5;;
+10005;Lumiere Fifth Dialog;1;10009;10006;5;;
+10006;Lumiere First Dialog;2;;10007;5;;
+10007;Lumiere Second Dialog;2;;10008;5;;
+10008;Lumiere Third Dialog;2;;10009;3;;
+10009;Lumiere Fourth Dialog;2;;10010;3;;
+10010;Lumiere Fifth Dialog;2;;10011;3;;
+10011;Lumiere First Dialog;2;;10012;3;;
+10012;Lumiere Second Dialog;2;;0;3;OpenScene,FirstStage;

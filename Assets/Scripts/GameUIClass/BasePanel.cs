@@ -42,29 +42,41 @@ public class BasePanel : MonoBehaviour
         expiredTime = -1;
         isActive = false;
     }
-    // 显示界面 注册Custom事件
+    // 注册Custom事件
+    public virtual void RegistCustomEvent()
+    {
+
+    }
+    // 显示界面 
     public virtual void DoShowPanel(params object[] args)
     {
+        if (!isActive)
+        {
+            RegistCustomEvent();
+        }
         expiredTime = -1;
         isActive = true;
-        if (canvasGroup != null)
-        {
-            canvasGroup.alpha = 1;
-        }
+        canvasGroup.alpha = 1;
+    }
+    public virtual void UnregistCustomEvent()
+    {
+
     }
     // 隐藏界面 注销Custom事件
     public virtual void DoHidePanel()
     {
-        expiredTime = DateTime.UtcNow.Ticks / 10000000.0;
-        isActive = false;
-        if (canvasGroup != null)
+        if (isActive)
         {
-            canvasGroup.alpha = 0;
+            UnregistCustomEvent();
+            expiredTime = DateTime.UtcNow.Ticks / 10000000.0;
         }
+        isActive = false;
+        canvasGroup.alpha = 0;
     }
     // 销毁界面 注销按钮相关事件
     public virtual void DestroyPanel()
     {
+        DoHidePanel();
         Destroy(gameObject);
     }
     public bool CheckIsAlive(double curTime)

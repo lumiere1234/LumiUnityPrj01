@@ -1,6 +1,7 @@
 using CoreManager;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class UIMgr : SingletonAutoMono<UIMgr>
@@ -57,12 +58,13 @@ public class UIMgr : SingletonAutoMono<UIMgr>
                 var panelGo = GameObject.Instantiate(go);
                 panelGo.transform.SetParent(UIRoot.transform);
                 panelInfo = panelGo.GetComponent<BasePanel>();
-                if (panelInfo != null)
+                if (panelInfo == null)
                 {
-                    panelInfo.uiCfg = gCfg;
-                    panelInfo.uiType = curType;
-                    panelInfo.uiName = uiName;
+                    throw new Exception($"No Panel Info in {uiName}");
                 }
+                panelInfo.uiCfg = gCfg;
+                panelInfo.uiType = curType;
+                panelInfo.uiName = uiName;
                 // …Ë÷√…„œÒª˙
                 panelInfo.DoInitial();
                 // …Ë÷√sortingLayer
@@ -175,6 +177,17 @@ public class UIMgr : SingletonAutoMono<UIMgr>
         }
     }
     #endregion
+    public void CloseUILoadScene()
+    {
+        List<string> list = PanelDict.Keys.ToList();
+        foreach (var name in list)
+        {
+            if (PanelDict[name].isActive)
+            {
+                HidePanel(name);
+            }
+        }
+    }
     // Event
     private void OnSceneLoadedComplete(params object[] args)
     {

@@ -7,10 +7,22 @@ public class DialogInfo
     public int dialogId;
     public DialogDataCfg dataCfg;
     private DialogCharaCfg _charaCfg;
+    public EDialogChatType DialogType
+    {
+        get
+        {
+            return dataCfg != null ? (EDialogChatType)dataCfg.speakerType : EDialogChatType.Default;
+        }
+    }
+    public string ActionStr => dataCfg != null ? dataCfg.action : string.Empty;
     public DialogCharaCfg charaCfg
     {
         get
         {
+            if (dataCfg.speakerType != (int)EDialogChatType.Character)
+            {
+                return null;
+            }
             if (_charaCfg == null)
             {
                 int charaId = dataCfg == null ? 0 : dataCfg.character;
@@ -37,4 +49,5 @@ public class DialogInfo
     {
         return dataCfg != null ? dataCfg.autoTime : -1;
     }
+    
 }

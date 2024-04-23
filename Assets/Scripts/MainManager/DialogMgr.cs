@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EDialogChatType
+{
+    Default = 0,
+    Character = 1,
+    Normal = 2,
+    Muitl = 3,
+}
 public class DialogMgr : SingletonAutoMono<DialogMgr>
 {
     private DialogInfo _curDialog;
@@ -49,10 +56,15 @@ public class DialogMgr : SingletonAutoMono<DialogMgr>
     {
         if (CurDialog == null) return;
         // do dialog end event
+        if (!CurDialog.ActionStr.Equals(string.Empty))
+        {
+            GMOpeMgr.GetInstance().DoOperation(CurDialog.ActionStr);
+        }
 
         int nextId = CurDialog.GetNextId();
         if (nextId == 0)
-        { 
+        {
+            _curDialog = null;
             UIMgr.GetInstance().HidePanel(UIDef.UIDialog);
             return;
         }

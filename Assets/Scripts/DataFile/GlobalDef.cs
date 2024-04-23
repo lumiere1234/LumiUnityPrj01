@@ -29,3 +29,10 @@ public static class GlobalDef
         SortingOrderDef.Add(EUISortingType.System, 3500);
     }
 }
+public static class SceneDef
+{
+    public static string MainScene = "MainScene";
+    public static string FirstStage = "FirstStage";
+    public static string LumiereScene = "LumiereScene";
+    public static string SampleScene = "SampleScene";
+}

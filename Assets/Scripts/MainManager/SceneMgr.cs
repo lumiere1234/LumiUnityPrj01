@@ -23,6 +23,10 @@ public class SceneMgr : SingletonAutoMono<SceneMgr>
     {
         lastInfo = currentInfo;
         currentInfo = new SceneInfo(sceneName);
+
+        // close ui
+        UIMgr.GetInstance().CloseUILoadScene();
+
         if (currentInfo.IsValid)
         {
             ResManager.GetInstance().LoadScene(sceneName, () => {

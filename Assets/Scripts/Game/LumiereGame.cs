@@ -81,16 +81,6 @@ public class LumiereGame : MonoBehaviour
 
     void LoadMainScene()
     {
-        //ResManager.GetInstance().LoadScene("MainScene", null);
-        SceneMgr.GetInstance().LoadScene("MainScene");
-    }
-
-    void StartGameTest2() 
-    {
-        Type type = typeof(Lumiere);
-        FieldInfo property = type.GetField("lumi1");
-        Lumiere lumi01 = new Lumiere();
-        property.SetValue(lumi01, 100);
-        Debug.Log(lumi01.lumi1);
+        SceneMgr.GetInstance().LoadScene(SceneDef.MainScene);
     }
 }

@@ -21,8 +21,7 @@ public class Main : MonoBehaviour
 
     void LoadMainScene()
     {
-        //ResManager.GetInstance().LoadScene("MainScene", null);
-        SceneMgr.GetInstance().LoadScene("MainScene");
+        SceneMgr.GetInstance().LoadScene(SceneDef.MainScene);
     }
 
     // Update is called once per frame

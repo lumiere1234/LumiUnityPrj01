@@ -88,7 +88,7 @@ public class GameConfigDataBase
                             curType = typeLine[i];
                             if(curType == "int")
                             {
-                                type.GetField(curName).SetValue(configData, int.Parse(anyLine[i]));
+                                type.GetField(curName).SetValue(configData, anyLine[i].Equals(string.Empty) ? 0 : int.Parse(anyLine[i]));
                             }
                             else if(curType == "string")
                             {
@@ -96,7 +96,7 @@ public class GameConfigDataBase
                             }
                             else if(curType == "float")
                             {
-                                type.GetField(curName).SetValue(configData, float.Parse(anyLine[i]));
+                                type.GetField(curName).SetValue(configData, anyLine[i].Equals(string.Empty) ? 0 : float.Parse(anyLine[i]));
                             }
                             else if(curType == "float[]")
                             {

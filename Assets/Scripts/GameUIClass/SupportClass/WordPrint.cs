@@ -49,4 +49,15 @@ public class WordPrint : MonoBehaviour
         MaxCount = str.Length;
         CurIntCount = 0;
     }
+    public bool CheckClickShow()
+    {
+        if (CurIntCount < MaxCount)
+        {
+            CurIntCount = MaxCount;
+            m_Text.maxVisibleCharacters = CurIntCount;
+
+            return true;
+        }
+        return false;
+    }
 }

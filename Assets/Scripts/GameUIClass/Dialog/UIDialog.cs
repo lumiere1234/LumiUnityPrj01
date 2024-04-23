@@ -9,7 +9,8 @@ public class UIDialog : BasePanel
 {
     [SerializeField] private Image imgCharacter;
     [SerializeField] private TMPro.TMP_Text txtName;
-    [SerializeField] private TMPro.TMP_Text txtContent;
+    [SerializeField] private WordPrint txtContent;
+    [SerializeField] private GameObject imgNameBG;
     [SerializeField] private Image imgBG;
     [SerializeField] private Toggle togAuto;
     public override void DoInitial()
@@ -20,12 +21,15 @@ public class UIDialog : BasePanel
         imgBG.AddTrigger(trigger, OnClickBG);
         togAuto.onValueChanged.AddListener(OnClickToggleAuto);
     }
+    public override void RegistCustomEvent()
+    {
+        base.RegistCustomEvent();
+        EventMgr.GetInstance().Register(EventDef.Dialog_RefreshPanel, OnEventRefreshPanel);
+        DialogMgr.GetInstance().m_UIDialog = this;
+    }
     public override void DoShowPanel(params object[] args)
     {
         base.DoShowPanel(args);
-        EventMgr.GetInstance().Register(EventDef.Dialog_RefreshPanel, OnEventRefreshPanel);
-        DialogMgr.GetInstance().m_UIDialog = this;
-
         InitPanelState();
         RefreshPanel();
     }
@@ -33,28 +37,64 @@ public class UIDialog : BasePanel
     {
         togAuto.SetIsOnWithoutNotify(DialogMgr.GetInstance().bAutoFlag);
     }
+    protected override void Update()
+    {
+        base.Update();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            OnCheckNextClick();
+        }
+    }
     private void RefreshPanel()
     {
         DialogInfo curInfo = DialogMgr.GetInstance().CurDialog;
         if (curInfo == null)
             return;
 
-        var charaCfg = curInfo.charaCfg;
-        imgCharacter.sprite = ResManager.GetInstance().LoadSprite(charaCfg.iconName);
-        txtName.text = charaCfg.name;
-        WordPrint wp = txtContent.gameObject.GetComponent<WordPrint>();
-        wp.SetPrintTxt(curInfo.dataCfg.dialogStr);
+        Sprite sprite = null;
+        string showName = string.Empty;
+        bool bShowNameBG = false;
+        bool bShowSprite = false;
+        if (curInfo.DialogType == EDialogChatType.Character)
+        {
+            var charaCfg = curInfo.charaCfg;
+            sprite = ResManager.GetInstance().LoadSprite(charaCfg.iconName);
+            showName = charaCfg.name;
+            bShowNameBG = true;
+            bShowSprite = true;
+        }
+        else
+        {
+
+        }
+        imgNameBG.SetActive(bShowNameBG);
+        txtName.text = showName;
+        imgCharacter.gameObject.SetActive(bShowSprite);
+        if (bShowSprite) imgCharacter.sprite = sprite;
+        txtContent.SetPrintTxt(curInfo.dataCfg.dialogStr);
         //txtContent.text = curInfo.dataCfg.dialogStr;
     }
     private void OnClickBG(BaseEventData data)
     {
+        OnCheckNextClick();
+    }
+    private void OnCheckNextClick()
+    {
+        if (txtContent.CheckClickShow())
+        {
+            return; 
+        }
         DialogMgr.GetInstance().DoNextDialog();
+    }
+    public override void UnregistCustomEvent()
+    {
+        base.UnregistCustomEvent();
+        DialogMgr.GetInstance().m_UIDialog = null;
+        EventMgr.GetInstance().UnRegister(EventDef.Dialog_RefreshPanel, OnEventRefreshPanel);
     }
     public override void DoHidePanel()
     {
         base.DoHidePanel();
-        DialogMgr.GetInstance().m_UIDialog = null;
-        EventMgr.GetInstance().UnRegister(EventDef.Dialog_RefreshPanel, OnEventRefreshPanel);
     }
     #region Event
     // event

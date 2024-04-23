@@ -739,7 +739,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imgCharacter: {fileID: 8392835836486319810}
   txtName: {fileID: 2498589090150247341}
-  txtContent: {fileID: 1249518238404732538}
+  txtContent: {fileID: 4616875412604600868}
+  imgNameBG: {fileID: 7306934728517861249}
   imgBG: {fileID: 2789721872512708820}
   togAuto: {fileID: 7794167228862805580}
 --- !u!1 &6724312273536056966
