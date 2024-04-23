@@ -29,4 +29,12 @@ public class DialogInfo
         this.dialogId = dialogId;
         dataCfg = GameConfigDataBase.GetConfigData<DialogDataCfg>(dialogId.ToString());
     }
+    public int GetNextId()
+    {
+        return dataCfg != null ? dataCfg.nextDialog : 0;
+    }
+    public float GetAutoTime()
+    {
+        return dataCfg != null ? dataCfg.autoTime : -1;
+    }
 }

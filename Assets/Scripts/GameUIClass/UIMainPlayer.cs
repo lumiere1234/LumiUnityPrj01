@@ -87,7 +87,7 @@ public class UIMainPlayer : BasePanel
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
-            UIMgr.GetInstance().ShowPanel("UI-Dialog", 10001);
+            DialogMgr.GetInstance().DoStartDialog(10002);
         }
     }
     void DoTimerAction()

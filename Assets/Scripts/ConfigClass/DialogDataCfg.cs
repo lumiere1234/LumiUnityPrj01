@@ -8,6 +8,7 @@ public partial class DialogDataCfg: GameConfigDataBase
 	public int character;
 	public string dialogStr;
 	public int nextDialog;
+	public float autoTime;
 	protected override string getFilePath()
 	{
 		return "DialogDataCfg";

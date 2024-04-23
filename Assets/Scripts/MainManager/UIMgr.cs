@@ -18,6 +18,7 @@ public class UIMgr : SingletonAutoMono<UIMgr>
     private Dictionary<EUISortingType, List<string>> CurUIDict = new Dictionary<EUISortingType, List<string>>();
     private Dictionary<string, BasePanel> PanelDict = new Dictionary<string, BasePanel>();
     private HashSet<string> ExpireNames = new HashSet<string>(); // ´ýÇå³ýUI
+    private Stack<string> FPStack = new Stack<string>();
     private BasePanel GetPanel(string panelName) { return PanelDict[panelName]; }
     private void Awake()
     {
@@ -54,7 +55,7 @@ public class UIMgr : SingletonAutoMono<UIMgr>
             if (go != null)
             {
                 var panelGo = GameObject.Instantiate(go);
-                panelGo.transform.parent = UIRoot.transform;
+                panelGo.transform.SetParent(UIRoot.transform);
                 panelInfo = panelGo.GetComponent<BasePanel>();
                 if (panelInfo != null)
                 {

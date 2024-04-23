@@ -1,5 +1,8 @@
 ﻿ExcelName: DialogData.xlsx
-sn;character;dialogStr;nextDialog;
-int;int;string;int;
-10001;10001;Lumiere First Dialog;10002;
-10002;10003;Lumiere Second Dialog;0;
+sn;character;dialogStr;nextDialog;autoTime;
+int;int;string;int;float;
+10001;10001;Lumiere First Dialog;10002;5;
+10002;10003;Lumiere Second Dialog;10003;5;
+10003;10005;Lumiere Third Dialog;10004;5;
+10004;10004;Lumiere Fourth Dialog;10005;5;
+10005;10009;Lumiere Fifth Dialog;0;5;
