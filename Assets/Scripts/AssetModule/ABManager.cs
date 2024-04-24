@@ -113,7 +113,7 @@ namespace CoreManager
         }
         public void LoadResAsync(string abName, string resName, System.Type type, Action<Object> callback)
         {
-            ReallyLoadResAsync(abName, resName, type, callback);
+            StartCoroutine(ReallyLoadResAsync(abName, resName, type, callback));
         }
         private IEnumerator ReallyLoadResAsync(string abName, string resName, System.Type type, Action<Object> callback)
         {

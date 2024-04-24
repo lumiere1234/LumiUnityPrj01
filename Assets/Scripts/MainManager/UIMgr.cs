@@ -127,6 +127,7 @@ public class UIMgr : SingletonAutoMono<UIMgr>
     {
         CurUIDict[EUISortingType.Default].Clear();
         CurUIDict[EUISortingType.FullScreen].Clear();
+        CurUIDict[EUISortingType.FullOverlay].Clear();
         CurUIDict[EUISortingType.Tips].Clear();
         CurUIDict[EUISortingType.System].Clear();
     }
@@ -182,6 +183,9 @@ public class UIMgr : SingletonAutoMono<UIMgr>
         List<string> list = PanelDict.Keys.ToList();
         foreach (var name in list)
         {
+            if (name == UIDef.UISceneLoading)
+                continue;
+
             if (PanelDict[name].isActive)
             {
                 HidePanel(name);

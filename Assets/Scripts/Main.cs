@@ -7,10 +7,14 @@ public class Main : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+
+        ShowLoadingPanel();
         InitData();
-        //TestAtlas();
         LoadMainScene();
-        //LoadUI();
+    }
+    void ShowLoadingPanel()
+    {
+        UILoading01.Show();
     }
     // 初始化数据结构
     void InitData()

@@ -17,6 +17,9 @@ public class StageStart01 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyUp(KeyCode.M))
+        {
+            SceneMgr.Instance.LoadScene(SceneDef.StageScene01);
+        }
     }
 }

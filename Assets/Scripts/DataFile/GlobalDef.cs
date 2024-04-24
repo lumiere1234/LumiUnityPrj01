@@ -35,4 +35,17 @@ public static class SceneDef
     public static string FirstStage = "FirstStage";
     public static string LumiereScene = "LumiereScene";
     public static string SampleScene = "SampleScene";
+    public static string StageScene01 = "StageScene01";
+    public static string StageScene02 = "StageScene02";
+    public static string StageScene03 = "StageScene03";
+    public static string StageScene04 = "StageScene04";
+    public static string StageScene05 = "StageScene05";
+    public static string StageScene06 = "StageScene06";
+}
+public static class BitDef
+{
+    public static int LoadingScene = 0x1;
+    public static int LoadingAtlas = 0x2;
+    public static int Bit3 = 0x4;
+    public static int Bit4 = 0x8;
 }

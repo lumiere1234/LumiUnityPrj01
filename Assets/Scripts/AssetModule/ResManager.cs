@@ -39,9 +39,7 @@ namespace CoreManager
             InitAllShaders();
             // 初始化图片索引
             InitImageSpriteIndex();
-            InitPreloadSpriteAtlas();
-            // 初始化音频索引 TODO
-            //InitAudioIndex();
+            DoPreloadSpriteAtlas(GetDefaultSpriteAtlas());
         }
         public void InitAllShaders()
         {
@@ -195,7 +193,6 @@ namespace CoreManager
 #region Sprite
         private Dictionary<string, SpriteAtlas> atlasList;
         private Dictionary<string, string> imageAtlasDict;
-
         private string[] GetDefaultSpriteAtlas()
         {
             string[] nameList = null;
@@ -239,6 +236,8 @@ namespace CoreManager
 #endif
         private void LoadAtlasInBundle(string atlasName)
         {
+            if (atlasList.ContainsKey(atlasName))
+                return;
             string bundleName = $"{atlasName.ToLower()}";
             string atlasPath = PathDefine.GetAtlasPathInBundle(atlasName);
             SpriteAtlas atlas = ABManager.GetInstance().LoadRes(bundleName, atlasPath, typeof(SpriteAtlas)) as SpriteAtlas;
@@ -246,6 +245,21 @@ namespace CoreManager
             {
                 atlasList.Add(atlasName, atlas);
             }
+        }
+        private void LoadAtlasInBundleAsync(string atlasName, Action callback = null)
+        {
+            if (atlasList.ContainsKey(atlasName))
+                return;
+            string bundleName = $"{atlasName.ToLower()}";
+            string atlasPath = PathDefine.GetAtlasPathInBundle(atlasName);
+            ABManager.GetInstance().LoadResAsync(bundleName, atlasPath, typeof(SpriteAtlas), (atlas) =>
+            {
+                if (atlas != null && atlas is SpriteAtlas)
+                {
+                    atlasList.Add(atlasName, (SpriteAtlas)atlas);
+                }
+                callback?.Invoke();
+            });
         }
         private void InitImageSpriteIndex()
         {
@@ -266,17 +280,33 @@ namespace CoreManager
                 sr.Close();
             }
         }
-        // 预加载图集
-        private void InitPreloadSpriteAtlas()
+        public void DoPreloadSpriteAtlas(string[] names)
         {
-            string[] defaultAtlas = GetDefaultSpriteAtlas();
-            if (defaultAtlas != null)
+            StartCoroutine(InitPreloadSpriteAtlas(names));
+        }
+        // 预加载图集
+        private IEnumerator InitPreloadSpriteAtlas(string[] names)
+        {
+            if (names == null)
             {
-                foreach (string name in defaultAtlas)
-                {
-                    LoadAtlasInBundle(name);
-                }
+                EventMgr.Instance.Invoke(EventDef.LoadingStreamCompleteEvent, BitDef.LoadingAtlas);
+                yield break;
             }
+            int count = names.Length;
+            foreach (string name in names)
+            {
+                if (atlasList.ContainsKey(name))
+                {
+                    count--;
+                    continue;
+                }
+                LoadAtlasInBundleAsync(name, () =>
+                {
+                    count--;
+                });
+            }
+            yield return new WaitUntil(() => count == 0);
+            EventMgr.Instance.Invoke(EventDef.LoadingStreamCompleteEvent, BitDef.LoadingAtlas);
         }
         private void ReadImageRelationLine(string strLine)
         {
