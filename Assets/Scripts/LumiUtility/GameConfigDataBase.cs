@@ -98,6 +98,10 @@ public class GameConfigDataBase
                             {
                                 type.GetField(curName).SetValue(configData, anyLine[i].Equals(string.Empty) ? 0 : float.Parse(anyLine[i]));
                             }
+                            else if(curType == "bool")
+                            {
+                                type.GetField(curName).SetValue(configData, anyLine[i].Equals(string.Empty) ? false : bool.Parse(anyLine[i]));
+                            }
                             else if(curType == "float[]")
                             {
                                 float[] floats = StringUtility.SplitStringByType<float>(anyLine[i], ",");

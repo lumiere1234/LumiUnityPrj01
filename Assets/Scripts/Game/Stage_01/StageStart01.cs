@@ -11,7 +11,7 @@ public class StageStart01 : MonoBehaviour
         // load playerHead
         UIMgr.GetInstance().ShowPanel(UIDef.UIMainHead);
 
-        AudioMgr.Instance.PlayBGM("Music_03.mp3");
+        //AudioMgr.Instance.PlayBGM("Music_03.mp3");
     }
 
     // Update is called once per frame
