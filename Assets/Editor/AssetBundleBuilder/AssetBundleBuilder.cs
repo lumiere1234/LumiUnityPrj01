@@ -47,6 +47,8 @@ public abstract class AssetBundleBuilder<T> : AssetBundleBuilder
         DoPutInAtlas();
         // GameUI
         DoPutInGameUI();
+        // Audio
+        DoPutInAudio();
     }
     // –¥»Îmanifest
     public virtual void CreateManifestFile()
@@ -75,7 +77,7 @@ public abstract class AssetBundleBuilder<T> : AssetBundleBuilder
                 string assetStr = fileStr.Substring(file.LastIndexOf("Assets"));
                 AssetBundleBuild build = new AssetBundleBuild();
                 string pureStr = StringUtility.GetPureName(assetStr);
-                build.assetBundleName = $"scene{pureStr}";
+                build.assetBundleName = $"{pureStr}";
                 build.assetNames = new string[] { assetStr };
                 assetBundleBuilds.Add(build);
                 nameList.Add(assetStr);
@@ -123,7 +125,7 @@ public abstract class AssetBundleBuilder<T> : AssetBundleBuilder
                 string assetStr = fileStr.Substring(file.LastIndexOf("Assets"));
                 AssetBundleBuild build = new AssetBundleBuild();
                 string pureStr = StringUtility.GetPureName(assetStr);
-                build.assetBundleName = $"atlas{pureStr}";
+                build.assetBundleName = $"{pureStr}";
                 build.assetNames = new string[] { assetStr };
                 assetBundleBuilds.Add(build);
                 nameList.Add(assetStr);
@@ -137,7 +139,6 @@ public abstract class AssetBundleBuilder<T> : AssetBundleBuilder
         {
             return;
         }
-        List<string> nameList = new List<string>();
         string[] files = Directory.GetFiles(PathDefine.GameUIDir);
         foreach (var file in files)
         {
@@ -150,12 +151,44 @@ public abstract class AssetBundleBuilder<T> : AssetBundleBuilder
                 build.assetBundleName = pureStr.ToLower();
                 build.assetNames = new string[] { assetStr };
                 assetBundleBuilds.Add(build);
-                nameList.Add(assetStr);
                 manifestInfo.AddBundleData(build);
             }
         }
     }
+    public void DoPutInAudio()
+    {
+        if (!Directory.Exists(PathDefine.AudioDir))
+        {
+            return;
+        }
+        List<string> nameList = new List<string>();
+        Queue<string> dirQueue = new Queue<string>();
+        dirQueue.Enqueue(PathDefine.AudioDir);
+        while (dirQueue.Count > 0)
+        {
+            string dirStr = dirQueue.Dequeue();
+            DirectoryInfo dirInfo = new DirectoryInfo(dirStr);
+            if (!dirInfo.Exists) { continue; }
+            FileSystemInfo[] fsInfos = dirInfo.GetFileSystemInfos();
+            foreach (FileSystemInfo fsi in fsInfos)
+            {
+                if (fsi is DirectoryInfo)
+                {
+                    dirQueue.Enqueue(fsi.FullName);
+                }
+                else if (!fsi.FullName.EndsWith(".meta"))
+                {
+                    string fileStr = StringUtility.GetAssetPathStringTrans(fsi.FullName.Trim());
+                    string assetStr = fileStr.Substring(fileStr.LastIndexOf("Assets"));
+                    AssetBundleBuild build = new AssetBundleBuild();
+                    string pureStr = StringUtility.GetPureName(assetStr);
+                    build.assetBundleName = pureStr.ToLower();
+                    build.assetNames = new string[] { assetStr };
+                    assetBundleBuilds.Add(build);
+                    nameList.Add(assetStr);
+                }
+            }
+        }
+        manifestInfo.AddSpecialData(nameList.ToArray(), EBundleInfoType.Music);
+    }
 }
-
-
-

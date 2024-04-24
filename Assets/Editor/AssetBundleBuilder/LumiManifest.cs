@@ -11,6 +11,7 @@ public enum EBundleInfoType
     Scenes,
     Shaders,
     Atlas,
+    Music,
 }
 class BundleInfo
 {
@@ -65,6 +66,16 @@ class BundleInfo
         else if (type == EBundleInfoType.Atlas)
         {
             sb.Append("Atlas:");
+            for (int i = 0; i < assetNames.Length; i++)
+            {
+                if (i > 0)
+                    sb.Append(',');
+                sb.Append(assetNames[i]);
+            }
+        }
+        else if (type == EBundleInfoType.Music)
+        {
+            sb.Append("Music:");
             for (int i = 0; i < assetNames.Length; i++)
             {
                 if (i > 0)

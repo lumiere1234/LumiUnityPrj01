@@ -1,3 +1,4 @@
+using LumiAudio;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,18 +9,20 @@ public class MainScene : MonoBehaviour
     void Start()
     {
         Debug.Log("start main scene");
-        LoadUI();
+        DoSceneInitial();
+    }
+
+    private void DoSceneInitial()
+    {
+        AudioMgr.Instance.PlayBGM("Music_01.mp3");
+
+        UIMgr.GetInstance().ShowPanel(UIDef.UIMainPlayer, 25);
+        UIMgr.GetInstance().ShowPanel(UIDef.UITestPanel);
     }
 
     // Update is called once per frame
     void Update()
     {
         
-    }
-
-    void LoadUI()
-    {
-        UIMgr.GetInstance().ShowPanel(UIDef.UIMainPlayer, 25);
-        UIMgr.GetInstance().ShowPanel(UIDef.UITestPanel);
     }
 }

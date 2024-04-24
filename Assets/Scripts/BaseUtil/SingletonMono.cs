@@ -9,7 +9,7 @@ public class SingletonMono<T> : MonoBehaviour where T : MonoBehaviour
     {
         return instance;
     }
-
+    public static T Instance => instance;
     private void Awake()
     {
         instance = this as T;

@@ -2,13 +2,15 @@ public enum EventDef
 {
     Default = 0,
 
-    // test 1-100
+    // System 1 - 1000
     LumiFirstEvent = 1,
     LumiSecondEvent = 2,
-    
-    // scene 101-200
-    SceneLoadCompleteEvent = 101,
 
-    // Dialog 201-300
-    Dialog_RefreshPanel = 201,
+    AudioTotalVolumeChangedEvent = 100,
+
+    // scene 1001 - 1200
+    SceneLoadCompleteEvent = 1001,
+
+    // Dialog 1201 - 1300
+    Dialog_RefreshPanel = 1201,
 }

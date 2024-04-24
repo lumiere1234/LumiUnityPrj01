@@ -31,7 +31,6 @@ namespace CoreManager
 #endif
             EventMgr.GetInstance().Register(EventDef.SceneLoadCompleteEvent, OnSceneLoadedComplete);
         }
-
         public void InitRes()
         {
             // 初始化索引
@@ -40,6 +39,9 @@ namespace CoreManager
             InitAllShaders();
             // 初始化图片索引
             InitImageSpriteIndex();
+            InitPreloadSpriteAtlas();
+            // 初始化音频索引 TODO
+            //InitAudioIndex();
         }
         public void InitAllShaders()
         {
@@ -77,7 +79,8 @@ namespace CoreManager
         /// 获取普通资源
         /// </summary>
         public Object GetAsset(string assetKey, Type type)
-        {
+        {   
+            assetKey = abInfo.CheckIsNickName(assetKey) ?? assetKey;
             if (AssetListRes.ContainsKey(assetKey))
             {
                 return AssetListRes[assetKey].Asset;
@@ -103,6 +106,7 @@ namespace CoreManager
         /// <returns></returns>
         public void GetAssetAsync(string assetKey, Type type, Action<Object> loadFunc)
         {
+            assetKey = abInfo.CheckIsNickName(assetKey) ?? assetKey;
 //#if UNITY_EDITOR
 //            StartCoroutine(DoGetAssetEditorAsync(assetKey, type, loadFunc));
 //#else
@@ -148,9 +152,8 @@ namespace CoreManager
                 {
                     CoreResource coreRes = new CoreResource(curType, assetKey, obj);
                     AssetListRes.Add(assetKey, coreRes);
-
-                    loadFunc?.Invoke(obj);
                 }
+                loadFunc?.Invoke(obj);
             });
         }
         /// <summary>
@@ -174,7 +177,7 @@ namespace CoreManager
 #endif
         IEnumerator DoLoadSceneInBundleAsync(string sceneName, Action callBack)
         {
-            string bundleName = $"scene{sceneName.ToLower()}";
+            string bundleName = $"{sceneName.ToLower()}";
 
             string bundlePath = $"{PathDefine.AssetBundlePath}/{bundleName}";
             UnityWebRequest req = UnityWebRequestAssetBundle.GetAssetBundle($"file://{bundlePath}");
@@ -190,8 +193,17 @@ namespace CoreManager
             }
         }
 #region Sprite
-        private Dictionary<string, SpriteAtlas> atlasList = new Dictionary<string, SpriteAtlas>();
-        private Dictionary<string, string> imageAtlasDict = new Dictionary<string, string>();
+        private Dictionary<string, SpriteAtlas> atlasList;
+        private Dictionary<string, string> imageAtlasDict;
+
+        private string[] GetDefaultSpriteAtlas()
+        {
+            string[] nameList = null;
+//#if !UNITY_EDITOR
+            nameList = new string[] { "imagechara", "imagescreen" };
+//#endif
+            return nameList;
+        }
         public Sprite LoadSprite(string spriteName)
         {
             if (!imageAtlasDict.ContainsKey(spriteName))
@@ -202,11 +214,11 @@ namespace CoreManager
             
             if (!atlasList.ContainsKey(atlasName))
             {
-#if UNITY_EDITOR
-                LoadAtlasInEditor(atlasName);
-#else
+//#if UNITY_EDITOR
+//                LoadAtlasInEditor(atlasName);
+//#else
                 LoadAtlasInBundle(atlasName);
-#endif
+//#endif
             }
             if (atlasList.ContainsKey(atlasName))
             {
@@ -227,7 +239,7 @@ namespace CoreManager
 #endif
         private void LoadAtlasInBundle(string atlasName)
         {
-            string bundleName = $"atlas{atlasName.ToLower()}";
+            string bundleName = $"{atlasName.ToLower()}";
             string atlasPath = PathDefine.GetAtlasPathInBundle(atlasName);
             SpriteAtlas atlas = ABManager.GetInstance().LoadRes(bundleName, atlasPath, typeof(SpriteAtlas)) as SpriteAtlas;
             if (atlas != null)
@@ -237,7 +249,8 @@ namespace CoreManager
         }
         private void InitImageSpriteIndex()
         {
-            imageAtlasDict.Clear();
+            atlasList = new Dictionary<string, SpriteAtlas>();
+            imageAtlasDict = new Dictionary<string, string>();
             string filePath = $"{PathDefine.AssetBundlePath}/{PathDefine.LumiImageRelation}";
             if(!File.Exists(filePath))
             {
@@ -251,6 +264,18 @@ namespace CoreManager
                     ReadImageRelationLine(strLine);
                 }
                 sr.Close();
+            }
+        }
+        // 预加载图集
+        private void InitPreloadSpriteAtlas()
+        {
+            string[] defaultAtlas = GetDefaultSpriteAtlas();
+            if (defaultAtlas != null)
+            {
+                foreach (string name in defaultAtlas)
+                {
+                    LoadAtlasInBundle(name);
+                }
             }
         }
         private void ReadImageRelationLine(string strLine)

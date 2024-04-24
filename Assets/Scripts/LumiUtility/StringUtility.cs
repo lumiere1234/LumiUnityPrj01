@@ -39,6 +39,10 @@ public static class StringUtility
         }
         return splitStr;
     }
+    public static string GetNameWithType(string path)
+    {
+        return path.Substring(path.LastIndexOf('/') + 1);
+    }
     public static string GetPureName(string path)
     {
         int startIndex = path.LastIndexOf('/') + 1;

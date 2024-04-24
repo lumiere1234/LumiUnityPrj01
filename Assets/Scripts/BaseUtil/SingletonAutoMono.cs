@@ -17,4 +17,5 @@ public class SingletonAutoMono<T> : MonoBehaviour where T : MonoBehaviour
         }
         return instance;
     }
+    public static T Instance => GetInstance();
 }

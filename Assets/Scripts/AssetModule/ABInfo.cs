@@ -7,6 +7,7 @@ namespace CoreManager
     public class ABInfo
     {
         private Dictionary<string, string> infoDict = new Dictionary<string, string>();
+        private Dictionary<string, string> nickNameDict = new Dictionary<string, string>(); // xxx => infoDict.key
         private Dictionary<string, string> sceneDict = new Dictionary<string, string>();
         private Dictionary<string, string> _shaderDict = new Dictionary<string, string>();
         public Dictionary<string, string> ShaderDict => _shaderDict;
@@ -15,6 +16,11 @@ namespace CoreManager
             infoDict.Clear();
             sceneDict.Clear();
             _shaderDict.Clear();
+        }
+        private void AddNickName(string assetName)
+        {
+            string nameStr = StringUtility.GetNameWithType(assetName);
+            nickNameDict.Add(nameStr, assetName);
         }
         public void ReadLine(string strLine)
         {
@@ -37,7 +43,7 @@ namespace CoreManager
                 foreach(var str in splitStr)
                 {
                     string pureStr = StringUtility.GetPureName(str);
-                    sceneDict.Add($"scene{pureStr.ToLower()}", str);
+                    sceneDict.Add($"{pureStr.ToLower()}", str);
                 }
             }
             else if (strLine.StartsWith("Atlas:"))
@@ -47,7 +53,19 @@ namespace CoreManager
                 foreach (var str in splitStr)
                 {
                     string pureStr = StringUtility.GetPureName(str);
-                    infoDict.Add(str, $"atlas{pureStr.ToLower()}");
+                    infoDict.Add(str, $"{pureStr.ToLower()}");
+                }
+            }
+            else if (strLine.StartsWith("Music:"))
+            {
+                string musicStr = strLine.Trim().Substring(6);
+                string[] splitStr = musicStr.Split(',');
+                foreach (var str in splitStr)
+                {
+                    string pureStr = StringUtility.GetPureName(str);
+                    infoDict.Add(str, $"{pureStr.ToLower()}");
+
+                    AddNickName(str);
                 }
             }
             else
@@ -56,6 +74,14 @@ namespace CoreManager
                 if (splitStr.Length >= 2)
                     infoDict.Add(splitStr[1], splitStr[0]);
             }
+        }
+        public string CheckIsNickName(string nameShort)
+        {
+            if (nickNameDict.ContainsKey(nameShort))
+            {
+                return nickNameDict[nameShort];
+            }
+            return null;
         }
         public string GetBundleNameByAssetPath(string path)
         {
