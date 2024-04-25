@@ -15,6 +15,7 @@ public class Main : MonoBehaviour
     void ShowLoadingPanel()
     {
         UILoading01.Show();
+        EventMgr.Instance.Invoke(EventDef.LoadingStreamAddTaskEvent, BitDef.LoadingAtlas | BitDef.LoadingScene);
     }
     // 初始化数据结构
     void InitData()

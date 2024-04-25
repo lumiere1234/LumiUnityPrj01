@@ -10,7 +10,9 @@ public enum EventDef
 
     // scene 1001 - 1200
     SceneLoadCompleteEvent          = 1001,
-    LoadingStreamCompleteEvent      = 1002, // 完成loading任务
+
+    LoadingStreamAddTaskEvent       = 1003, // 设置laoding任务
+    LoadingStreamCompleteEvent      = 1004, // 完成loading任务
 
     // Dialog 1201 - 1300
     Dialog_RefreshPanel             = 1201,

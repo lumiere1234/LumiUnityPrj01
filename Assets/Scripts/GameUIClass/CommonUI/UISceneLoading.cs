@@ -14,23 +14,18 @@ public class UISceneLoading : BasePanel
     {
         base.RegistCustomEvent();
         EventMgr.Instance.Register(EventDef.LoadingStreamCompleteEvent, OnSceneTaskCompleteEvent);
+        EventMgr.Instance.Register(EventDef.LoadingStreamAddTaskEvent, OnAddTaskStatusEvent);
     }
     public override void UnregistCustomEvent()
     {
         base.UnregistCustomEvent();
         EventMgr.Instance.UnRegister(EventDef.LoadingStreamCompleteEvent, OnSceneTaskCompleteEvent);
+        EventMgr.Instance.UnRegister(EventDef.LoadingStreamAddTaskEvent, OnAddTaskStatusEvent);
     }
     public override void DoShowPanel(params object[] args)
     {
         base.DoShowPanel(args);
-        if (args.Length > 0)
-        {
-            SceneInfo info = (SceneInfo)args[0];
-            SceneDataCfg dataCfg = info?.SceneCfg;
-            LoadingFactor = dataCfg == null ? 0 : dataCfg.loadingFactor;
-        }
-        else
-            LoadingFactor = 0;
+        LoadingFactor = -1;
     }
 
     // Update is called once per frame
@@ -50,11 +45,30 @@ public class UISceneLoading : BasePanel
     {
         UIMgr.Instance.HidePanel(uiName);
     }
+    private void SetTask(int id)
+    {
+        if (LoadingFactor < 0) LoadingFactor = 0;
+        LoadingFactor |= id;
+    }
+    private void TaskComplete(int id)
+    {
+        if ((LoadingFactor & id) > 0)
+        {
+            LoadingFactor -= id;
+        }
+    }
     private void OnSceneTaskCompleteEvent(params object[] args)
     {
         if (args.Length > 0)
         {
-            LoadingFactor -= (int)args[0];
+            TaskComplete((int)args[0]);
+        }
+    }
+    private void OnAddTaskStatusEvent(params object[] args)
+    {
+        if (args.Length > 0)
+        {
+            SetTask((int)args[0]);
         }
     }
 }

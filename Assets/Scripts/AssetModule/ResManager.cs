@@ -197,7 +197,7 @@ namespace CoreManager
         {
             string[] nameList = null;
 //#if !UNITY_EDITOR
-            nameList = new string[] { "imagechara", "imagescreen" };
+            nameList = new string[] { "imagechara", "imagescreen01" };
 //#endif
             return nameList;
         }

@@ -10,4 +10,5 @@ public static class UIDef
     public const string UIDialog = "UI-Dialog";
     public const string UIMainHead = "UI-MainHead";
     public const string UISceneLoading = "UI-SceneLoading";
+    public const string UIMainWindow = "UI-MainWindow";
 }

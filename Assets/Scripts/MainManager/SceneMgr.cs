@@ -46,18 +46,33 @@ public class SceneMgr : SingletonAutoMono<SceneMgr>
             return;
         }
 
-        UIMgr.Instance.ShowPanel(UIDef.UISceneLoading, currentInfo); // next scene
+        // loading scene
+        LoadTransScene();
+        
         // 加载关卡可能用到的图集
         string[] atlasList = curSceneCfg.loadingAtlas.Split(',', StringSplitOptions.RemoveEmptyEntries);
         if (atlasList != null && atlasList.Length > 0)
         {
+            EventMgr.Instance.Invoke(EventDef.LoadingStreamAddTaskEvent, BitDef.LoadingAtlas);
             ResManager.Instance.DoPreloadSpriteAtlas(atlasList);
         }
+    }
+    private void LoadTransScene()
+    {
+        UIMgr.Instance.ShowPanel(UIDef.UISceneLoading); // next scene
+        int factor = BitDef.LoadingScene;
+        if (curSceneCfg.defaultUIList.Length > 0)
+        {
+            factor |= BitDef.LoadingUI;
+        }
+        EventMgr.Instance.Invoke(EventDef.LoadingStreamAddTaskEvent, factor);
     }
     private void DoAfterLoadScene()
     {
         // 播放入场景音乐
         DoPlayEnterBGM();
+        // 加载默认UI
+        DoLoadDefaultUI();
     }
     private void DoPlayEnterBGM()
     {
@@ -76,14 +91,31 @@ public class SceneMgr : SingletonAutoMono<SceneMgr>
             }
         }
     }
-    // Start is called before the first frame update
-    void Start()
+    private int _loadUICount = 0;
+    private void DoLoadDefaultUI()
     {
-           
+        _loadUICount = curSceneCfg.defaultUIList.Length;
+        if (_loadUICount > 0)
+        {
+            EventMgr.Instance.Invoke(EventDef.LoadingStreamAddTaskEvent, BitDef.LoadingUI);
+        }
+
+        foreach (var ui in curSceneCfg.defaultUIList)
+        {
+            var param = new UILoadParams();
+            param.bDefaultScene = true;
+            UIMgr.Instance.ShowPanel(ui, param);
+        }
     }
-    // Update is called once per frame
-    void Update()
+    public void LoadDefaultUIOver()
     {
-        
+        if (_loadUICount > 0)
+        {
+            _loadUICount--;
+            if (_loadUICount == 0)
+            {
+                EventMgr.Instance.Invoke(EventDef.LoadingStreamCompleteEvent, BitDef.LoadingUI);
+            }
+        }
     }
 }

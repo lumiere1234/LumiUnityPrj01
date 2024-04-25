@@ -9,13 +9,12 @@ public class MainScene : MonoBehaviour
     void Start()
     {
         Debug.Log("start main scene");
-        DoSceneInitial();
+        //DoSceneInitial();
     }
 
     private void DoSceneInitial()
     {
         //AudioMgr.Instance.PlayBGM("Music_01.mp3");
-
         UIMgr.GetInstance().ShowPanel(UIDef.UIMainPlayer, 25);
         UIMgr.GetInstance().ShowPanel(UIDef.UITestPanel);
     }

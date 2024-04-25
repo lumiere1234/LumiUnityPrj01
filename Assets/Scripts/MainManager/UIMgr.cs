@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public class UILoadParams
+{
+    public object[] args = null;
+    public bool bDefaultScene = false;
+}
+
 public class UIMgr : SingletonAutoMono<UIMgr>
 {
     private GameObject _root = null;
@@ -72,9 +78,17 @@ public class UIMgr : SingletonAutoMono<UIMgr>
                 PanelDict.Add(uiName, panelInfo);
                 CurUIDict[curType].Add(uiName);
             }
-        } 
+        }
         // 设置初始参数
-        panelInfo.DoShowPanel(args);
+        if (args != null && args.Length > 0 && args[0] is UILoadParams)
+        {
+            var paramInfo = args[0] as UILoadParams;
+            if (paramInfo.bDefaultScene)
+                SceneMgr.Instance.LoadDefaultUIOver();
+            panelInfo.DoShowPanel(paramInfo.args);
+        }
+        else
+            panelInfo.DoShowPanel(args);
     }
     private int GetNextSortingTypeID(EUISortingType eType)
     {
