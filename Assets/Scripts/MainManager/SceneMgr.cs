@@ -1,7 +1,6 @@
 using CoreManager;
 using LumiAudio;
 using System;
-
 public class SceneInfo
 {
     public string SceneName;
@@ -59,7 +58,7 @@ public class SceneMgr : SingletonAutoMono<SceneMgr>
     }
     private void LoadTransScene()
     {
-        UIMgr.Instance.ShowPanel(UIDef.UISceneLoading); // next scene
+        UIMgr.Instance.ShowPanel(UIDef.UISceneLoadingPanel); // next scene
         int factor = BitDef.LoadingScene;
         if (curSceneCfg.defaultUIList.Length > 0)
         {

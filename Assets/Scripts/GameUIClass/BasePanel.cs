@@ -57,6 +57,7 @@ public class BasePanel : MonoBehaviour
         expiredTime = -1;
         isActive = true;
         canvasGroup.alpha = 1;
+        canvasGroup.blocksRaycasts = true;
     }
     protected virtual void UnregistCustomEvent()
     {
@@ -72,6 +73,7 @@ public class BasePanel : MonoBehaviour
         }
         isActive = false;
         canvasGroup.alpha = 0;
+        canvasGroup.blocksRaycasts = false;
     }
     // Ïú»Ù½çÃæ 
     public virtual void DestroyPanel()

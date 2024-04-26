@@ -136,7 +136,20 @@ public class UIMgr : SingletonAutoMono<UIMgr>
         panel.DestroyPanel();
         PanelDict.Remove(uiName);
     }
+    public void SaveFullPanelStack(string uiName)
+    {
+        FPStack.Push(uiName);
+    }
+    public void DoBackPanel(string uiName)
+    {
+        HidePanel(uiName);
 
+        string lastPanel = FPStack.Pop();
+        if (!string.IsNullOrEmpty(lastPanel))
+        {
+            ShowPanel(lastPanel);
+        }
+    }
     public void ResetPanel()
     {
         CurUIDict[EUISortingType.Default].Clear();
@@ -145,7 +158,6 @@ public class UIMgr : SingletonAutoMono<UIMgr>
         CurUIDict[EUISortingType.Tips].Clear();
         CurUIDict[EUISortingType.System].Clear();
     }
-
     public int ResetSortingOrder(EUISortingType eType)
     {
         int sortingLayer = GlobalDef.SortingOrderDef[eType];
@@ -197,7 +209,7 @@ public class UIMgr : SingletonAutoMono<UIMgr>
         List<string> list = PanelDict.Keys.ToList();
         foreach (var name in list)
         {
-            if (name == UIDef.UISceneLoading)
+            if (name == UIDef.UISceneLoadingPanel)
                 continue;
 
             if (PanelDict[name].isActive)

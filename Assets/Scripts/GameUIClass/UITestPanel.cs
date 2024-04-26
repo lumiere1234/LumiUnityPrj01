@@ -14,10 +14,10 @@ public class UITestPanel : BasePanel
     }
     private void OnClickBtnShow()
     {
-        UIMgr.GetInstance().ShowPanel(UIDef.UIMainPlayer);
+        UIMgr.GetInstance().ShowPanel(UIDef.UIMainPlayerPanel);
     }
     private void OnClickBtnHide()
     {
-        UIMgr.GetInstance().HidePanel(UIDef.UIMainPlayer);
+        UIMgr.GetInstance().HidePanel(UIDef.UIMainPlayerPanel);
     }
 }

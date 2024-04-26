@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class UILoading01 : MonoBehaviour
+public class UILoading01Panel : MonoBehaviour
 {
-    private static UILoading01 instance;
-    public static UILoading01 Instance { get { return instance; } }
+    private static UILoading01Panel instance;
+    public static UILoading01Panel Instance { get { return instance; } }
     private int NeedBit = 0x0;
     public static void Show()
     {
@@ -16,7 +16,7 @@ public class UILoading01 : MonoBehaviour
             {
                 goIns.transform.SetParent(uiRoot.transform);
             }
-            instance = goIns.GetComponent<UILoading01>();
+            instance = goIns.GetComponent<UILoading01Panel>();
         }
     }
     private void Awake()

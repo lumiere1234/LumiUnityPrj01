@@ -38,7 +38,7 @@ public class DialogMgr : SingletonAutoMono<DialogMgr>
         _curDialog = new DialogInfo(dialogId);
         if (m_UIDialog == null)
         {
-            UIMgr.GetInstance().ShowPanel(UIDef.UIDialog);
+            UIMgr.GetInstance().ShowPanel(UIDef.UIDialogPanel);
         }
         else
         {
@@ -65,7 +65,7 @@ public class DialogMgr : SingletonAutoMono<DialogMgr>
         if (nextId == 0)
         {
             _curDialog = null;
-            UIMgr.GetInstance().HidePanel(UIDef.UIDialog);
+            UIMgr.GetInstance().HidePanel(UIDef.UIDialogPanel);
             return;
         }
         DoStartDialog(nextId);

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using CoreManager;
 
-public class UIMainWindow : BasePanel
+public class UIMainPanel : BasePanel
 {
     [SerializeField] private Button BtnEnter;
     [SerializeField] private Button BtnChara;
@@ -64,11 +64,15 @@ public class UIMainWindow : BasePanel
     }
     private void OnClickBtnEnter()
     {
-        Debug.Log("Lumiere enter");
+        UIMgr.Instance.ShowPanel(UIDef.UILevelSelectPanel);
+        UIMgr.Instance.SaveFullPanelStack(uiName);
+        UIMgr.Instance.HidePanel(uiName);
     }
     private void OnClickBtnChara()
     {
-        Debug.Log("Lumiere Chara");
+        UIMgr.Instance.ShowPanel(UIDef.UICharaShowPanel);
+        UIMgr.Instance.SaveFullPanelStack(uiName);
+        UIMgr.Instance.HidePanel(uiName);
     }
     #region Event
     private void OnChangeMainHeroineEvent(params object[] args)

@@ -622,7 +622,7 @@ GameObject:
   - component: {fileID: 2479971354091199240}
   - component: {fileID: 4335460948537259493}
   m_Layer: 5
-  m_Name: UI-Dialog
+  m_Name: UI-DialogPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

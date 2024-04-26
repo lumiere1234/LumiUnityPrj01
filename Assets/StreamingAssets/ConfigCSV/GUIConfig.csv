@@ -1,10 +1,11 @@
 ﻿ExcelName: Gui.xlsx
 sn;path;sortingType;destroyTime;
 string;string;int;double;
-UI-MainPlayer;Assets/GameRes/GameUI/UI-MainPlayer.prefab;1;60;
-UI-TestPanel;Assets/GameRes/GameUI/UI-TestPanel.prefab;1;60;
-UI-MainTips;Assets/GameRes/GameUI/UI-MainTips.prefab;3;20;
-UI-Dialog;Assets/GameRes/GameUI/UI-Dialog.prefab;2;60;
-UI-MainHead;Assets/GameRes/GameUI/UI-MainHead.prefab;2;60;
-UI-SceneLoading;Assets/GameRes/GameUI/UI-SceneLoading.prefab;0;60;
-UI-MainWindow;Assets/GameRes/GameUI/UI-MainWindow.prefab;1;60;
+UI-MainPlayerPanel;Assets/GameRes/GameUI/MainPanel/UI-MainPlayerPanel.prefab;1;60;
+UI-TestPanel;Assets/GameRes/GameUI/Other/UI-TestPanel.prefab;1;60;
+UI-MainTips;Assets/GameRes/GameUI/UITips/UI-MainTips.prefab;3;20;
+UI-DialogPanel;Assets/GameRes/GameUI/MainPanel/UI-DialogPanel.prefab;2;60;
+UI-SceneLoadingPanel;Assets/GameRes/GameUI/MainPanel/UI-SceneLoadingPanel.prefab;0;60;
+UI-MainPanel;Assets/GameRes/GameUI/MainPanel/UI-MainPanel.prefab;1;60;
+UI-LevelSelectPanel;Assets/GameRes/GameUI/MainPanel/UI-LevelSelectPanel.prefab;1;60;
+UI-CharaShowPanel;Assets/GameRes/GameUI/MainPanel/UI-CharaShowPanel.prefab;1;60;
