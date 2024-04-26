@@ -13,6 +13,8 @@ public enum EUISortingType
 
 public static class GlobalDef
 {
+    public static int MainUIHeight = 1080;
+    public static int MainUIWidth = 1920;
     public static Dictionary<EUISortingType, int> SortingOrderDef = new Dictionary<EUISortingType, int>();
 
     static GlobalDef()
