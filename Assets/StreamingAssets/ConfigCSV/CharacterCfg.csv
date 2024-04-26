@@ -1,0 +1,12 @@
+﻿ExcelName: Character.xlsx
+sn;name;headIcon;fullIcon;dialogBigIcon;dialogSmallIcon;
+int;string;string;string;string;string;
+10001;Aina;Aina_OBS.png;Aina_OBS.png;Aina_OBS.png;Aina_OBS.png;
+10002;CatGirl;Image_Chara_01.png;Image_Chara_01.png;Image_Chara_01.png;Image_Chara_01.png;
+10003;Karen;Karen_OBS.png;Karen_OBS.png;Karen_OBS.png;Karen_OBS.png;
+10004;Miyabi;Miyabi_OBS.png;Miyabi_OBS.png;Miyabi_OBS.png;Miyabi_OBS.png;
+10005;PinkGirl;Pink_OBS.png;Pink_OBS.png;Pink_OBS.png;Pink_OBS.png;
+10006;Ryza;Ryza_OBS.png;Ryza_OBS.png;Ryza_OBS.png;Ryza_OBS.png;
+10007;TokeiUsagi;TokeiUsagi_OBS.png;TokeiUsagi_OBS.png;TokeiUsagi_OBS.png;TokeiUsagi_OBS.png;
+10008;WEA;WEA_OBS.png;WEA_OBS.png;WEA_OBS.png;WEA_OBS.png;
+10009;Yumemi;Yumemi_OBS.png;Yumemi_OBS.png;Yumemi_OBS.png;Yumemi_OBS.png;

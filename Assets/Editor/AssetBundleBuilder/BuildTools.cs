@@ -1,10 +1,6 @@
 using CoreManager;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
 using System.IO;
 using UnityEditor;
-using UnityEngine;
 
 public class BuildTools : Editor
 {

@@ -1,3 +1,4 @@
+using CoreManager;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,5 +13,10 @@ public static class UIExtra
         entry.eventID = EventTriggerType.PointerDown;
         entry.callback.AddListener((data) => { onclick(data); });
         trigger.triggers.Add(entry);
+    }
+    public static void SetSprite(this Image self, string spriteName)
+    {
+        Sprite sprite = ResManager.Instance.LoadSprite(spriteName);
+        self.sprite = sprite;
     }
 }

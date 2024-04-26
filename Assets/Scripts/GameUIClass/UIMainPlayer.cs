@@ -11,11 +11,15 @@ public class UIMainPlayer : BasePanel
     [SerializeField] private Button btnClose;
     [SerializeField] private Image imgBG;
     private int Timer = 0;
+    protected override void Awake()
+    {
+        base.Awake();
+        btnExit.onClick.AddListener(OnClickBtnExit);
+        btnClose.onClick.AddListener(OnClickBtnClose);
+    }
     public override void DoInitial()
     {
         base.DoInitial();
-        btnExit.onClick.AddListener(OnClickBtnExit);
-        btnClose.onClick.AddListener(OnClickBtnClose);
     }
     public override void DoShowPanel(params object[] args)
     {
@@ -49,12 +53,6 @@ public class UIMainPlayer : BasePanel
     {
         base.DoHidePanel();
         ClearTimer();
-    }
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-        btnExit.onClick.RemoveAllListeners();
-        btnClose.onClick.RemoveAllListeners();
     }
     private void RefreshPanel()
     {

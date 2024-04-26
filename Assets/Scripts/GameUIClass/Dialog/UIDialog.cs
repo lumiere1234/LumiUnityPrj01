@@ -1,6 +1,4 @@
 using CoreManager;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,15 +11,20 @@ public class UIDialog : BasePanel
     [SerializeField] private GameObject imgNameBG;
     [SerializeField] private Image imgBG;
     [SerializeField] private Toggle togAuto;
-    public override void DoInitial()
-    {   
-        base.DoInitial();
+
+    protected override void Awake()
+    {
+        base.Awake();
 
         EventTrigger trigger = imgBG.GetComponent<EventTrigger>();
         imgBG.AddTrigger(trigger, OnClickBG);
         togAuto.onValueChanged.AddListener(OnClickToggleAuto);
     }
-    public override void RegistCustomEvent()
+    public override void DoInitial()
+    {   
+        base.DoInitial();
+    }
+    protected override void RegistCustomEvent()
     {
         base.RegistCustomEvent();
         EventMgr.GetInstance().Register(EventDef.Dialog_RefreshPanel, OnEventRefreshPanel);
@@ -58,7 +61,7 @@ public class UIDialog : BasePanel
         if (curInfo.DialogType == EDialogChatType.Character)
         {
             var charaCfg = curInfo.charaCfg;
-            sprite = ResManager.GetInstance().LoadSprite(charaCfg.iconName);
+            sprite = ResManager.GetInstance().LoadSprite(charaCfg.dialogSmallIcon);
             showName = charaCfg.name;
             bShowNameBG = true;
             bShowSprite = true;
@@ -86,7 +89,7 @@ public class UIDialog : BasePanel
         }
         DialogMgr.GetInstance().DoNextDialog();
     }
-    public override void UnregistCustomEvent()
+    protected override void UnregistCustomEvent()
     {
         base.UnregistCustomEvent();
         DialogMgr.GetInstance().m_UIDialog = null;

@@ -1,9 +1,7 @@
 using CoreManager;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
-using UnityEngine;
 
 public enum EPutInBundleType
 {
@@ -46,9 +44,11 @@ public abstract class AssetBundleBuilder<T> : AssetBundleBuilder
         // AddAtlas
         DoPutInAtlas();
         // GameUI
-        DoPutInGameUI();
+        DoPutInAllSubFiles(PathDefine.GameUIDir, EBundleInfoType.Normal, EBundleWriteType.One);
         // Audio
-        DoPutInAudio();
+        DoPutInAllSubFiles(PathDefine.AudioDir, EBundleInfoType.Music, EBundleWriteType.Many);
+        // Prefab
+        DoPutInAllSubFiles(PathDefine.PrefabDir, EBundleInfoType.Normal, EBundleWriteType.One);
     }
     // –¥»Îmanifest
     public virtual void CreateManifestFile()
@@ -133,37 +133,37 @@ public abstract class AssetBundleBuilder<T> : AssetBundleBuilder
         }
         manifestInfo.AddSpecialData(nameList.ToArray(), EBundleInfoType.Atlas);
     }
-    public void DoPutInGameUI()
+    //public void DoPutInGameUI()
+    //{
+    //    if (!Directory.Exists(PathDefine.GameUIDir))
+    //    {
+    //        return;
+    //    }
+    //    string[] files = Directory.GetFiles(PathDefine.GameUIDir);
+    //    foreach (var file in files)
+    //    {
+    //        if (file.EndsWith(".prefab"))
+    //        {
+    //            string fileStr = StringUtility.GetAssetPathStringTrans(file.Trim());
+    //            string assetStr = fileStr.Substring(file.LastIndexOf("Assets"));
+    //            AssetBundleBuild build = new AssetBundleBuild();
+    //            string pureStr = StringUtility.GetPureName(assetStr);
+    //            build.assetBundleName = pureStr.ToLower();
+    //            build.assetNames = new string[] { assetStr };
+    //            assetBundleBuilds.Add(build);
+    //            manifestInfo.AddBundleData(build);
+    //        }
+    //    }
+    //}
+    public void DoPutInAllSubFiles(string path, EBundleInfoType bType, EBundleWriteType wType)
     {
-        if (!Directory.Exists(PathDefine.GameUIDir))
-        {
-            return;
-        }
-        string[] files = Directory.GetFiles(PathDefine.GameUIDir);
-        foreach (var file in files)
-        {
-            if (file.EndsWith(".prefab"))
-            {
-                string fileStr = StringUtility.GetAssetPathStringTrans(file.Trim());
-                string assetStr = fileStr.Substring(file.LastIndexOf("Assets"));
-                AssetBundleBuild build = new AssetBundleBuild();
-                string pureStr = StringUtility.GetPureName(assetStr);
-                build.assetBundleName = pureStr.ToLower();
-                build.assetNames = new string[] { assetStr };
-                assetBundleBuilds.Add(build);
-                manifestInfo.AddBundleData(build);
-            }
-        }
-    }
-    public void DoPutInAudio()
-    {
-        if (!Directory.Exists(PathDefine.AudioDir))
+        if (!Directory.Exists(path))
         {
             return;
         }
         List<string> nameList = new List<string>();
         Queue<string> dirQueue = new Queue<string>();
-        dirQueue.Enqueue(PathDefine.AudioDir);
+        dirQueue.Enqueue(path);
         while (dirQueue.Count > 0)
         {
             string dirStr = dirQueue.Dequeue();
@@ -185,10 +185,15 @@ public abstract class AssetBundleBuilder<T> : AssetBundleBuilder
                     build.assetBundleName = pureStr.ToLower();
                     build.assetNames = new string[] { assetStr };
                     assetBundleBuilds.Add(build);
-                    nameList.Add(assetStr);
+
+                    if (wType == EBundleWriteType.One)
+                        manifestInfo.AddBundleData(build);
+                    else
+                        nameList.Add(assetStr);      
                 }
             }
         }
-        manifestInfo.AddSpecialData(nameList.ToArray(), EBundleInfoType.Music);
+        if (wType == EBundleWriteType.Many)
+            manifestInfo.AddSpecialData(nameList.ToArray(), bType);
     }
 }

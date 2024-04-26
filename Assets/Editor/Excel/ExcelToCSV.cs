@@ -28,7 +28,7 @@ public class ExcelToCSV : Editor
 
         DoCreateCSConfig();
     }
-    [MenuItem("Tools/Excel/Create Config Class")]
+    //[MenuItem("Tools/Excel/Create Config Class")]
     public static void DoCreateCSConfig()
     {
         MainUtility.CheckAndCreateDir(PathDefine.TargetDir);

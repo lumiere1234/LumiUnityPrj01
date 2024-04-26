@@ -72,7 +72,10 @@ namespace CoreManager
             {
                 string[] splitStr = strLine.Trim().Split('=');
                 if (splitStr.Length >= 2)
+                {
                     infoDict.Add(splitStr[1], splitStr[0]);
+                    AddNickName(splitStr[1]);
+                }
             }
         }
         public string CheckIsNickName(string nameShort)

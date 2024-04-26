@@ -10,13 +10,13 @@ public class UISceneLoading : BasePanel
         base.Awake();
         LoadingFactor = -1;
     }
-    public override void RegistCustomEvent()
+    protected override void RegistCustomEvent()
     {
         base.RegistCustomEvent();
         EventMgr.Instance.Register(EventDef.LoadingStreamCompleteEvent, OnSceneTaskCompleteEvent);
         EventMgr.Instance.Register(EventDef.LoadingStreamAddTaskEvent, OnAddTaskStatusEvent);
     }
-    public override void UnregistCustomEvent()
+    protected override void UnregistCustomEvent()
     {
         base.UnregistCustomEvent();
         EventMgr.Instance.UnRegister(EventDef.LoadingStreamCompleteEvent, OnSceneTaskCompleteEvent);

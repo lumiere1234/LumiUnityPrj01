@@ -6,7 +6,7 @@ public class DialogInfo
 {
     public int dialogId;
     public DialogDataCfg dataCfg;
-    private DialogCharaCfg _charaCfg;
+    private CharacterCfg _charaCfg;
     public EDialogChatType DialogType
     {
         get
@@ -15,7 +15,7 @@ public class DialogInfo
         }
     }
     public string ActionStr => dataCfg != null ? dataCfg.action : string.Empty;
-    public DialogCharaCfg charaCfg
+    public CharacterCfg charaCfg
     {
         get
         {
@@ -26,7 +26,7 @@ public class DialogInfo
             if (_charaCfg == null)
             {
                 int charaId = dataCfg == null ? 0 : dataCfg.character;
-                _charaCfg = GameConfigDataBase.GetConfigData<DialogCharaCfg>(charaId.ToString());
+                _charaCfg = GameConfigDataBase.GetConfigData<CharacterCfg>(charaId.ToString());
             }
             return _charaCfg;
         }

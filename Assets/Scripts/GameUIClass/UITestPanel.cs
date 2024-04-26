@@ -20,10 +20,4 @@ public class UITestPanel : BasePanel
     {
         UIMgr.GetInstance().HidePanel(UIDef.UIMainPlayer);
     }
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-        btnShow.onClick.RemoveAllListeners();
-        btnHide.onClick.RemoveAllListeners();
-    }
 }

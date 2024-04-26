@@ -12,7 +12,14 @@ public enum EBundleInfoType
     Shaders,
     Atlas,
     Music,
+    Prefab,
 }
+public enum EBundleWriteType
+{
+    One,
+    Many,
+}
+
 class BundleInfo
 {
     public string bundleName;

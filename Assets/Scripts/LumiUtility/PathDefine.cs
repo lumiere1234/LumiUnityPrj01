@@ -42,6 +42,7 @@ namespace CoreManager
         public static string AtlasDir => $"{Application.dataPath}/GameRes/ImgAtlas";
         public static string GameUIDir => $"{Application.dataPath}/GameRes/GameUI";
         public static string AudioDir => $"{Application.dataPath}/GameRes/Audio";
+        public static string PrefabDir => $"{Application.dataPath}/GameRes/Prefab";
         public static string TextureDir => $"{Application.dataPath}/Texture";
         public static string GetAtlasPathInBundle(string atlasName)
         {

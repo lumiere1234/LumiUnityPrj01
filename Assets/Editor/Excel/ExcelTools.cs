@@ -54,7 +54,7 @@ public class ExcelTools : EditorWindow
 	/// <summary>
 	/// 显示当前窗口	
 	/// </summary>
-	[MenuItem("Tools/Excel/ExcelTools")]
+	//[MenuItem("Tools/Excel/ExcelTools")]
 	static void ShowExcelTools()
 	{
 		Init();

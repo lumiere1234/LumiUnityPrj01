@@ -35,7 +35,7 @@ public class BasePanel : MonoBehaviour
     public bool isActive { get; set; }
     private double expiredTime = -1;
     public double destroyTime => uiCfg.destroyTime == 0 ? GameSettingDef.DefaultDestroyUITime : uiCfg.destroyTime;
-    // 初始化 注册按钮相关事件
+    // 初始化
     public virtual void DoInitial()
     {
         canvas.worldCamera = CameraMgr.GetInstance().UICamera;
@@ -43,7 +43,7 @@ public class BasePanel : MonoBehaviour
         isActive = false;
     }
     // 注册Custom事件
-    public virtual void RegistCustomEvent()
+    protected virtual void RegistCustomEvent()
     {
 
     }
@@ -58,7 +58,7 @@ public class BasePanel : MonoBehaviour
         isActive = true;
         canvasGroup.alpha = 1;
     }
-    public virtual void UnregistCustomEvent()
+    protected virtual void UnregistCustomEvent()
     {
 
     }
@@ -73,7 +73,7 @@ public class BasePanel : MonoBehaviour
         isActive = false;
         canvasGroup.alpha = 0;
     }
-    // 销毁界面 注销按钮相关事件
+    // 销毁界面 
     public virtual void DestroyPanel()
     {
         DoHidePanel();
@@ -111,6 +111,7 @@ public class BasePanel : MonoBehaviour
     {
 
     }
+    // 注销按钮相关事件
     protected virtual void OnDestroy()
     {
 

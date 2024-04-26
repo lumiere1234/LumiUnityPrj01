@@ -16,4 +16,7 @@ public enum EventDef
 
     // Dialog 1201 - 1300
     Dialog_RefreshPanel             = 1201,
+    
+    // Main Window
+    ChangeMainHeroineId             = 1301, // 更换展示主角
 }

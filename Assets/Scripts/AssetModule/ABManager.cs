@@ -20,6 +20,8 @@ namespace CoreManager
         }
         public void LoadAB(string abName)
         {
+            if (string.IsNullOrEmpty(abName)) return;
+
             if (mainAssetBundle == null)
             {
                 mainAssetBundle = AssetBundle.LoadFromFile(GetBundleFile(PathDefine.MainABName));
