@@ -20,6 +20,7 @@ public class Main : MonoBehaviour
     // 初始化数据结构
     void InitData()
     {
+        GameMgr.Instance.Initial();
         InputMgr.Instance.Initial();
         CameraMgr.Instance.InitCamera();
         ResManager.Instance.InitRes();

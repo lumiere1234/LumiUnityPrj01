@@ -51,3 +51,10 @@ public static class BitDef
     public static int LoadingUI = 0x4;
     public static int Bit4 = 0x8;
 }
+public static class ImageDef
+{
+    public static string ImgStarY = "Img_StarYellow01.png";
+    public static string ImgStarYH= "Img_StarHalfYellow01.png";
+    public static string ImgStarBlank = "Img_StarBlank01.png";
+}
+

@@ -13,4 +13,5 @@ public static class UIDef
     public const string UIMainPanel = "UI-MainPanel";
     public const string UICharaShowPanel = "UI-CharaShowPanel";
     public const string UILevelSelectPanel = "UI-LevelSelectPanel";
+    public const string UIConfirmTIps = "UI-ConfirmTips";
 }

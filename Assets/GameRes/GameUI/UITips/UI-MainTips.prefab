@@ -240,7 +240,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55db970335837534ca36d13bcaf62c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expiredTime: -1
   PanelTips: {fileID: 86751269240849339}
   TipsRoot: {fileID: 3306884010472046816}
 --- !u!1 &6522340554599771932
