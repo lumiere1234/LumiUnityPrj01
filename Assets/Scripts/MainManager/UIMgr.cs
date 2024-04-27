@@ -27,6 +27,8 @@ public class UIMgr : SingletonAutoMono<UIMgr>
     private HashSet<string> ExpireNames = new HashSet<string>(); // ´ýÇå³ýUI
     private Stack<string> FPStack = new Stack<string>();
     private BasePanel GetPanel(string panelName) { return PanelDict[panelName]; }
+    private BasePanel _curFullPanel;
+    private BasePanel CurFullPanel => _curFullPanel;
     private void Awake()
     {
         CurUIDict.Clear();
@@ -44,6 +46,8 @@ public class UIMgr : SingletonAutoMono<UIMgr>
     }
     public void ShowPanel(string uiName, params object[] args)
     {
+        if (string.IsNullOrEmpty(uiName)) return;
+
         BasePanel panelInfo = null;
         if (PanelDict.ContainsKey(uiName))
         {
@@ -169,6 +173,11 @@ public class UIMgr : SingletonAutoMono<UIMgr>
         }
         return sortingLayer - 1;
     }
+    public void ReturnToMainUI(Action callBack)
+    {
+        FPStack.Clear();
+        ShowPanel(UIDef.UIMainPanel);
+    }
 
     #region Expire Panel
     private List<string> clearList = new List<string>();
@@ -206,6 +215,7 @@ public class UIMgr : SingletonAutoMono<UIMgr>
     #endregion
     public void CloseUILoadScene()
     {
+        FPStack.Clear();
         List<string> list = PanelDict.Keys.ToList();
         foreach (var name in list)
         {
@@ -221,6 +231,6 @@ public class UIMgr : SingletonAutoMono<UIMgr>
     // Event
     private void OnSceneLoadedComplete(params object[] args)
     {
-        
+
     }
 }

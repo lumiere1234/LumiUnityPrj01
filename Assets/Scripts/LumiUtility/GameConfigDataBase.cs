@@ -79,6 +79,9 @@ public class GameConfigDataBase
                     else if(count > 2)
                     {
                         anyLine = strLine.Split(';');
+                        if (anyLine[0].Equals(string.Empty))
+                            continue;
+
                         T configData = Activator.CreateInstance<T>();
                         Type type = typeof(T);
 
@@ -104,17 +107,17 @@ public class GameConfigDataBase
                             }
                             else if(curType == "float[]")
                             {
-                                float[] floats = StringUtility.SplitStringByType<float>(anyLine[i], ",");
+                                float[] floats = anyLine[i].Equals(string.Empty) ? null : StringUtility.SplitStringByType<float>(anyLine[i], ",");
                                 type.GetField(curName).SetValue(configData, floats);
                             }
                             else if (curType == "int[]")
                             {
-                                int[] ints = StringUtility.SplitStringByType<int>(anyLine[i], ",");
+                                int[] ints = anyLine[i].Equals(string.Empty) ? null : StringUtility.SplitStringByType<int>(anyLine[i], ",");
                                 type.GetField(curName).SetValue(configData, ints);
                             }
                             else if (curType == "string[]")
                             {
-                                string[] strs = StringUtility.SplitString(anyLine[i], ",");
+                                string[] strs = anyLine[i].Equals(string.Empty) ? null : StringUtility.SplitString(anyLine[i], ",");
                                 type.GetField(curName).SetValue(configData, strs);
                             }
                         }

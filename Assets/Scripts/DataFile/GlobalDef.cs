@@ -57,4 +57,12 @@ public static class ImageDef
     public static string ImgStarYH= "Img_StarHalfYellow01.png";
     public static string ImgStarBlank = "Img_StarBlank01.png";
 }
+public static class WorldTypeDef
+{
+    public static int World1 = 1;
+    public static int World2 = 2;
+    public static int World3 = 3;
+    public static int World4 = 4;
+}
+
 

@@ -37,6 +37,10 @@ public class SceneMgr : SingletonAutoMono<SceneMgr>
                 });
         }
     }
+    public void LoadMainScene(Action callBack = null)
+    {
+        LoadScene(SceneDef.MainScene, callBack);
+    }
     private void DoBeforeLoadScene()
     {
         if (bFirstEnter)
@@ -47,9 +51,9 @@ public class SceneMgr : SingletonAutoMono<SceneMgr>
 
         // loading scene
         LoadTransScene();
-        
+
         // 加载关卡可能用到的图集
-        string[] atlasList = curSceneCfg.loadingAtlas.Split(',', StringSplitOptions.RemoveEmptyEntries);
+        string[] atlasList = curSceneCfg.loadingAtlas;
         if (atlasList != null && atlasList.Length > 0)
         {
             EventMgr.Instance.Invoke(EventDef.LoadingStreamAddTaskEvent, BitDef.LoadingAtlas);
@@ -60,7 +64,7 @@ public class SceneMgr : SingletonAutoMono<SceneMgr>
     {
         UIMgr.Instance.ShowPanel(UIDef.UISceneLoadingPanel); // next scene
         int factor = BitDef.LoadingScene;
-        if (curSceneCfg.defaultUIList.Length > 0)
+        if (curSceneCfg.defaultUIList != null)
         {
             factor |= BitDef.LoadingUI;
         }
@@ -90,20 +94,20 @@ public class SceneMgr : SingletonAutoMono<SceneMgr>
             }
         }
     }
+    #region Load Default UI
     private int _loadUICount = 0;
     private void DoLoadDefaultUI()
     {
-        _loadUICount = curSceneCfg.defaultUIList.Length;
-        if (_loadUICount > 0)
+        if (curSceneCfg.defaultUIList != null)
         {
+            _loadUICount = curSceneCfg.defaultUIList.Length;
             EventMgr.Instance.Invoke(EventDef.LoadingStreamAddTaskEvent, BitDef.LoadingUI);
-        }
-
-        foreach (var ui in curSceneCfg.defaultUIList)
-        {
-            var param = new UILoadParams();
-            param.bDefaultScene = true;
-            UIMgr.Instance.ShowPanel(ui, param);
+            foreach (var ui in curSceneCfg.defaultUIList)
+            {
+                var param = new UILoadParams();
+                param.bDefaultScene = true;
+                UIMgr.Instance.ShowPanel(ui, param);
+            }
         }
     }
     public void LoadDefaultUIOver()
@@ -117,4 +121,5 @@ public class SceneMgr : SingletonAutoMono<SceneMgr>
             }
         }
     }
+    #endregion
 }

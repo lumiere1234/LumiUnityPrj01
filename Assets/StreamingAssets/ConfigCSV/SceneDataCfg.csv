@@ -1,11 +1,11 @@
 ﻿ExcelName: Scene.xlsx
 sn;desc;path;mainImg;bNoBGM;bForceBGM;sceneBGM;levelLimit;bLoading;loadingFactor;loadingAtlas;defaultUIList;
-string;string;string;string;bool;bool;string;int;bool;int;string;string[];
+string;string;string;string;bool;bool;string;int;bool;int;string[];string[];
 MainScene;游戏主场景;AssetPath/GameRes/Scene/MainScene.unity;;False;True;Music_01.mp3;0;True;0;ImageChara,ImageCommonUI,ImageScreen01;UI-MainPanel;
 FirstStage;第一个关卡;AssetPath/GameRes/Scene/FirstStage.unity;main.png;False;False;Music_03.mp3;3;True;3;ImageHeadIcon;;
-StageScene01;关卡1;Assets/GameRes/Scene/StageScene01.unity;;False;True;Music_04.mp3;;True;1;;;
-StageScene02;关卡2;Assets/GameRes/Scene/StageScene02.unity;;False;True;Music_05.mp3;;True;1;;;
-StageScene03;关卡3;Assets/GameRes/Scene/StageScene03.unity;;False;True;Music_06.mp3;;True;3;ImageHeadIcon;;
-StageScene04;关卡4;Assets/GameRes/Scene/StageScene04.unity;;False;True;Music_07.mp3;;True;1;;;
-StageScene05;关卡5;Assets/GameRes/Scene/StageScene05.unity;;False;True;Music_08.mp3;;True;1;;;
-StageScene06;关卡6;Assets/GameRes/Scene/StageScene06.unity;;False;True;Music_09.mp3;;True;1;;;
+StageScene01;关卡1;Assets/GameRes/Scene/StageScene01.unity;;False;True;Music_04.mp3;;True;1;;UI-LevelBackPanel;
+StageScene02;关卡2;Assets/GameRes/Scene/StageScene02.unity;;False;True;Music_05.mp3;;True;1;;UI-LevelBackPanel;
+StageScene03;关卡3;Assets/GameRes/Scene/StageScene03.unity;;False;True;Music_06.mp3;;True;3;ImageHeadIcon;UI-LevelBackPanel;
+StageScene04;关卡4;Assets/GameRes/Scene/StageScene04.unity;;False;True;Music_07.mp3;;True;1;;UI-LevelBackPanel;
+StageScene05;关卡5;Assets/GameRes/Scene/StageScene05.unity;;False;True;Music_08.mp3;;True;1;;UI-LevelBackPanel;
+StageScene06;关卡6;Assets/GameRes/Scene/StageScene06.unity;;False;True;Music_09.mp3;;True;1;;UI-LevelBackPanel;

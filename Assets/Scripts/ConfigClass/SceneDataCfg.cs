@@ -14,7 +14,7 @@ public partial class SceneDataCfg: GameConfigDataBase
 	public int levelLimit;
 	public bool bLoading;
 	public int loadingFactor;
-	public string loadingAtlas;
+	public string[] loadingAtlas;
 	public string[] defaultUIList;
 	protected override string getFilePath()
 	{

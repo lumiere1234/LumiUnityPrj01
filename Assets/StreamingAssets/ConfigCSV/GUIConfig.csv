@@ -10,3 +10,4 @@ UI-MainPanel;Assets/GameRes/GameUI/MainPanel/UI-MainPanel.prefab;1;60;
 UI-LevelSelectPanel;Assets/GameRes/GameUI/MainPanel/UI-LevelSelectPanel.prefab;1;60;
 UI-CharaShowPanel;Assets/GameRes/GameUI/MainPanel/UI-CharaShowPanel.prefab;1;60;
 UI-ConfirmTips;Assets/GameRes/GameUI/UITips/UI-ConfirmTips.prefab;3;60;
+UI-LevelBackPanel;Assets/GameRes/GameUI/LevelPanel/UI-LevelBackPanel.prefab;2;60;

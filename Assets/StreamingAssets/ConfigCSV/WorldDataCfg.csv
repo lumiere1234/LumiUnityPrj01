@@ -1,0 +1,9 @@
+﻿ExcelName: LevelData.xlsx
+sn;worldName;difficulty;sceneName;worldType;
+int;string;int;string;int;
+10001;FirstWorld;2;StageScene01;1;
+10002;TouhouProject;4;StageScene02;2;
+10003;PoppingParty;7;StageScene05;3;
+10004;ProjectSEKAI;9;StageScene06;4;
+;;;;;
+;;;;;

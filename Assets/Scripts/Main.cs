@@ -21,6 +21,7 @@ public class Main : MonoBehaviour
     void InitData()
     {
         GameMgr.Instance.Initial();
+        WorldMgr.Instance.Initial();
         InputMgr.Instance.Initial();
         CameraMgr.Instance.InitCamera();
         ResManager.Instance.InitRes();
