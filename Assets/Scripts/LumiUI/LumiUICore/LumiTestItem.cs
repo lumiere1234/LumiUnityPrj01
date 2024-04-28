@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
-public class LumiScrollList : ScrollView
+public class LumiTestItem : LumiScrollItem
 {
+    [SerializeField] private TMPro.TMP_Text txtLumi;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,5 +16,9 @@ public class LumiScrollList : ScrollView
     void Update()
     {
         
+    }
+    public void UpdateData(int index)
+    {
+        txtLumi.text = index.ToString();
     }
 }

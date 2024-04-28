@@ -12,6 +12,8 @@ public class UIDialog : BasePanel
     [SerializeField] private Image imgBG;
     [SerializeField] private Toggle togAuto;
 
+    UnityEngine.UIElements.ScrollView mm;
+
     protected override void Awake()
     {
         base.Awake();
