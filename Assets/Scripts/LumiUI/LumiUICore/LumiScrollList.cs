@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static UnityEngine.UI.ScrollRect;
 
 namespace UnityEngine.UI
 {
@@ -11,12 +10,11 @@ namespace UnityEngine.UI
     {
         [SerializeField] private List<LumiScrollItem> m_ScrollItems = new List<LumiScrollItem>();
         [SerializeField] private int m_Padding = 0;
-
-        private int viewportHeight => (int)viewport.rect.height;
-
+        public bool bHorizontal => horizontal;
+        private int viewportLength => bHorizontal ? (int)viewport.rect.width : (int)viewport.rect.height;
+        private float contentTarget => bHorizontal ? content.anchoredPosition.x : content.anchoredPosition.y;
         private List<int> itemTypeList = new List<int>();
         private Dictionary<int, Stack<LumiScrollItem>> scrollItemPool = new Dictionary<int, Stack<LumiScrollItem>>();
-
         public List<LumiScrollItem> ScrollItems
         {
             get {
@@ -25,7 +23,6 @@ namespace UnityEngine.UI
             }
             set { m_ScrollItems = value; }
         }
-        public bool bHorizontal => horizontal;
         public int Padding
         {
             get { return m_Padding; }
@@ -49,11 +46,15 @@ namespace UnityEngine.UI
         private List<LumiScrollItem> m_itemList = new List<LumiScrollItem>(); // 当前Item列表
         private int _currentLength = 0;
         private int CurrentLength => _currentLength;
-
-        bool isOverLength {
-            get {
-                return content.anchoredPosition.y + CurrentLength > viewport.rect.height;
-            }
+        private Vector3 NewCurrentPos => bHorizontal ? new Vector3(CurrentLength, 0, 0) : new Vector3(0, -CurrentLength, 0);
+        private Vector2 GetNewAnchorPos(int pos)
+        {
+            return bHorizontal ? new Vector2(pos, 0) : new Vector2(0, -pos);
+        }
+        bool isOverLength => contentTarget + CurrentLength > viewportLength;
+        private int GetItemLength(LumiScrollItem item)
+        {
+            return (int)(bHorizontal ? item.Width : item.Height);
         }
         public void ResetList()
         {
@@ -88,11 +89,34 @@ namespace UnityEngine.UI
             {
                 GameObject go = Instantiate(m_ScrollItems[index].gameObject);
                 go.transform.SetParent(content.transform, false);
-                //go.transform.anchoredPosition = Vector3.zero;
                 target = go.GetComponent<LumiScrollItem>();
                 go.name = $"{go.name}{tempId++}";
             }
             return target;
+        }
+        private Vector2 GetNewSizeDelta(Vector2 data)
+        {
+            if (bHorizontal)
+                data.x = _currentLength;
+            else
+                data.y = _currentLength;
+            return data;
+        }
+        private Vector2 GetNewSizeDelta(Vector2 data, int length)
+        {
+            if (bHorizontal)
+                data.x = length;
+            else
+                data.y = length;
+            return data;
+        }
+        private Vector2 GetNewSizeDeltaOffset(Vector2 data, int offset)
+        {
+            if (bHorizontal)
+                data.x = data.x + offset;
+            else
+                data.y = data.y + offset;
+            return data;
         }
         public void AddItems(int index = 0, int count = 1)
         {
@@ -104,13 +128,11 @@ namespace UnityEngine.UI
                 {
                     _currentLength += m_itemList.Count > 0 ? Padding : 0;
                     var item = GetScrollItem(index);
-                    item.CurrentRect.anchoredPosition = new Vector3(0, -_currentLength, 0);
-                    _currentLength += (int)item.Height;
+                    item.CurrentRect.anchoredPosition = NewCurrentPos;
+                    _currentLength += GetItemLength(item);
                     m_itemList.Add(item);
 
-                    Vector2 sizeDelta = content.sizeDelta;
-                    sizeDelta.y = _currentLength;
-                    content.sizeDelta = sizeDelta;
+                    content.sizeDelta = GetNewSizeDelta(content.sizeDelta);
                 }
             }
         }
@@ -124,20 +146,18 @@ namespace UnityEngine.UI
             {
                 _currentLength += i > 0 ? Padding : 0;
                 var item = m_itemList[i];
-                item.CurrentRect.anchoredPosition = new Vector3(0, -_currentLength, 0);
-                _currentLength += (int)item.Height;
+                item.CurrentRect.anchoredPosition = NewCurrentPos;
+                _currentLength += GetItemLength(item);
             }
-            var sizeDelta = content.sizeDelta;
-            sizeDelta.y = _currentLength;
-            content.sizeDelta = sizeDelta;
+            content.sizeDelta = GetNewSizeDelta(content.sizeDelta);
             UpdateContent();
         }
         private void RelocateItemTail()
         {
             _currentLength += m_itemList.Count > 1 ? Padding : 0;
             var item = m_itemList[m_itemList.Count - 1];
-            item.CurrentRect.anchoredPosition = new Vector3(0, -_currentLength, 0);
-            _currentLength += (int)item.Height;
+            item.CurrentRect.anchoredPosition = NewCurrentPos;
+            _currentLength += GetItemLength(item);
         }
         // 根据首尾编号更新列表
         private void UpdateContent()
@@ -160,7 +180,7 @@ namespace UnityEngine.UI
 
         public void ScrollToEnd()
         {
-            JumpToItem(itemTypeList.Count - 1);    
+            JumpToItem(itemTypeList.Count - 1);
         }
 
         public void JumpToItem(int index)
@@ -178,7 +198,7 @@ namespace UnityEngine.UI
                     var go = GetScrollItem(targetType);
                     _currentLength += m_itemList.Count > 0 ? Padding : 0;
                     LumiScrollItem item = go.GetComponent<LumiScrollItem>();
-                    _currentLength += (int)item.Height;
+                    _currentLength += GetItemLength(item);
                     m_itemList.Add(item);
                 }
             }
@@ -194,7 +214,7 @@ namespace UnityEngine.UI
 
         public void Update()
         {
-            
+
             if (Input.GetKey(KeyCode.K))
             {
                 content.anchoredPosition -= new Vector2(0, 1);
@@ -222,10 +242,8 @@ namespace UnityEngine.UI
         }
         private bool CheckHeadCell()
         {
-            //if (m_itemList.Count == 0)
-            //    return false;
-            // need add
-            if (content.anchoredPosition.y < factor)
+            if ((!bHorizontal && contentTarget < factor)
+                || (bHorizontal && contentTarget + factor < 0))
             {
                 // do insert
                 if (m_headIndex == 0)
@@ -240,26 +258,22 @@ namespace UnityEngine.UI
                     m_headIndex = targetId;
                     go.gameObject.SetActive(false);
 
-                    content.anchoredPosition += new Vector2(0, item.Height + Padding);
-
+                    content.anchoredPosition -= GetNewAnchorPos(GetItemLength(item) + Padding);
                     return true;
                 }
             }
             if (m_itemList.Count == 0) return false;
             // need remove
             int firstheight = (int)m_itemList[0].Height;
-            if (content.anchoredPosition.y > firstheight + Padding + factorRemove)
+            if ((!bHorizontal && contentTarget > firstheight + Padding + factorRemove)
+                || (bHorizontal && contentTarget + firstheight + Padding + factorRemove < 0))
             {
-                Debug.Log($"Lumiere {content.anchoredPosition}");
-
                 var item = m_itemList[0];
-                content.anchoredPosition -= new Vector2(0, item.Height + Padding);
+                content.anchoredPosition += GetNewAnchorPos(GetItemLength(item) + Padding);
 
                 AddItemToPool(m_itemList[0], itemTypeList[m_headIndex]);
                 m_headIndex++;
                 m_itemList.RemoveAt(0);
-
-                Debug.Log($"Lumiere over {content.anchoredPosition}");
 
                 return true;
             }
@@ -267,7 +281,8 @@ namespace UnityEngine.UI
         }
         private bool CheckTailCell()
         {
-            if (CurrentLength - content.anchoredPosition.y < viewportHeight + factor)
+            if ((!bHorizontal && CurrentLength - contentTarget < viewportLength + factor)
+                || (bHorizontal && CurrentLength + contentTarget < viewportLength + factor))
             {
                 // 没有可以添加的
                 if (m_itemList.Count + m_headIndex >= itemTypeList.Count) return false;
@@ -280,35 +295,28 @@ namespace UnityEngine.UI
                 m_setInfoCallback(item, targetId);
                 go.gameObject.SetActive(true);
                 RelocateItemTail();
-
-                var sizeDelta = content.sizeDelta;
-                sizeDelta.y = sizeDelta.y + item.Height + Padding;
-                content.sizeDelta = sizeDelta;
-
+                content.sizeDelta = GetNewSizeDeltaOffset(content.sizeDelta, GetItemLength(item) + Padding);
                 return true;
             }
             if (m_itemList.Count == 0) return false;
             // need remove
             int lastId = m_itemList.Count - 1;
             int lastHeight = (int)m_itemList[lastId].Height;
-            if (CurrentLength - content.anchoredPosition.y > viewportHeight + lastHeight + Padding + factorRemove)
+            if ((!bHorizontal && CurrentLength - contentTarget > viewportLength + lastHeight + Padding + factorRemove)
+                || (bHorizontal && CurrentLength + contentTarget > viewportLength + factorRemove))
             {
                 var item = m_itemList[lastId];
-
-                var sizeDelta = content.sizeDelta;
-                sizeDelta.y = sizeDelta.y - item.Height - Padding;
-                content.sizeDelta = sizeDelta;
-                _currentLength -= (int)item.Height + Padding;
+                content.sizeDelta = GetNewSizeDeltaOffset(content.sizeDelta, -GetItemLength(item) - Padding);
+                _currentLength -= GetItemLength(item) + Padding;
 
                 AddItemToPool(m_itemList[lastId], itemTypeList[lastId + m_headIndex]);
                 m_itemList.RemoveAt(lastId);
-
                 return true;
             }
             return false;
         }
-        int factor = 50;
-        int factorRemove = 100;
+        int factor = 10;
+        int factorRemove = 10;
         protected override void LateUpdate()
         {
             base.LateUpdate();
