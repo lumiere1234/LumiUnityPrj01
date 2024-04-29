@@ -8,9 +8,24 @@ public class Main : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
 
-        ShowLoadingPanel();
-        InitData();
-        LoadMainScene();
+        if (LoadDefaultSaveData())
+        {
+            ShowLoadingPanel();
+            InitData();
+            LoadMainScene();
+        }
+        else
+        {
+            Debug.Log("lumiere No SaveData");
+            ShowLoadingPanel();
+            InitData();
+            LoadMainScene();
+        }
+    }
+    bool LoadDefaultSaveData()
+    {
+        int saveId = GameMgr.Instance.defaultSaveId;
+        return SaveMgr.Instance.DoLoadFile(saveId);
     }
     void ShowLoadingPanel()
     {

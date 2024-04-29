@@ -7,6 +7,7 @@ public static class StringDef
     // playersPref
     public static readonly string TextSpeedSetting = "TextSpeedSetting";
     public static readonly string TextSpeedFactor = "TextSpeedFactor";
+    public static readonly string DefaultSaveId = "DefaultSaveId";
 
     // confirmTips
     public static readonly string TipsComfirmDefaultStr = "OK";
@@ -14,4 +15,5 @@ public static class StringDef
     public static readonly string TipsTitleDefaultStr = "Notice";
 
     public static readonly string TipsLeaveGameStr = "Do you leave game?";
+    public static readonly string TipsRequireSaveStr = "Do you want to save game to {0}";
 }

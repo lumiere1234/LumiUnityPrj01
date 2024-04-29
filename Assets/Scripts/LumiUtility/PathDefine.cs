@@ -52,5 +52,6 @@ namespace CoreManager
         {
             return $"Assets/Texture/{atlasName}/{imageName}";
         }
+        public static string SaveDataDir => $"{Directory.GetParent(Application.dataPath)}/SaveData";
     }
 }
