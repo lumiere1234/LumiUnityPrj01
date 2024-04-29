@@ -15,6 +15,7 @@ namespace UnityEditor.LumiUI
         {
             // 3001 
             LumiScrollList = 3001, // 滑动列表
+            LumiScrollGrid = 3002, // 滑动网格
         }
 
         private const string kUILayerName = "UI";
@@ -236,6 +237,14 @@ namespace UnityEditor.LumiUI
             GameObject go;
             using (new FactorySwapToEditor())
                 go = LumiDefaultControls.CreateLumiScrollList(GetStandardResources());
+            PlaceUIElementRoot(go, menuCommand);
+        }
+        [MenuItem("GameObject/UI/LumiScrollGrid", false, (int)LumiMenuOptionsPriorityOrder.LumiScrollGrid)]
+        static public void AddLumiScrollGrid(MenuCommand menuCommand)
+        {
+            GameObject go;
+            using (new FactorySwapToEditor())
+                go = LumiDefaultControls.CreateLumiScrollGrid(GetStandardResources());
             PlaceUIElementRoot(go, menuCommand);
         }
         private static void CreateEventSystem(bool select, GameObject parent)

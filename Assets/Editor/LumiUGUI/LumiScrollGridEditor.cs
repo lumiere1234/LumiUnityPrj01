@@ -6,15 +6,17 @@ using UnityEngine.UI;
 
 namespace UnityEditor.UI
 {
-    [CustomEditor(typeof(LumiScrollList), true)]
+    [CustomEditor(typeof(LumiScrollGrid), true)]
     [CanEditMultipleObjects]
-    public class LumiScrollListEditor : Editor
+    public class LumiScrollGridEditor : Editor
     {
-        LumiScrollList curTarget;
+        LumiScrollGrid curTarget;
 
         SerializedProperty m_scrollItems;
         SerializedProperty m_Content;
         SerializedProperty m_HorizontalFlag;
+        SerializedProperty m_CellCount;
+        SerializedProperty m_CellSize;
         SerializedProperty m_Padding;
         SerializedProperty m_MovementType;
         SerializedProperty m_Elasticity;
@@ -37,11 +39,13 @@ namespace UnityEditor.UI
 
         protected virtual void OnEnable()
         {
-            curTarget = (LumiScrollList)target;
+            curTarget = (LumiScrollGrid)target;
             //base.OnEnable();
-            m_scrollItems = serializedObject.FindProperty("m_ScrollItems");            
+            m_scrollItems = serializedObject.FindProperty("m_ScrollItems");
             m_Content = serializedObject.FindProperty("m_Content");
             m_HorizontalFlag = serializedObject.FindProperty("m_Horizontal");
+            m_CellCount = serializedObject.FindProperty("m_CellCount");
+            m_CellSize = serializedObject.FindProperty("m_CellSize");
             m_Padding = serializedObject.FindProperty("m_Padding");
             m_MovementType = serializedObject.FindProperty("m_MovementType");
             m_Elasticity = serializedObject.FindProperty("m_Elasticity");
@@ -106,10 +110,13 @@ namespace UnityEditor.UI
             CalculateCachedValues();
 
             curTarget.vertical = !curTarget.horizontal;
+
             EditorGUILayout.PropertyField(m_Content);
             EditorGUILayout.PropertyField(m_scrollItems);
 
             EditorGUILayout.PropertyField(m_HorizontalFlag);
+            EditorGUILayout.PropertyField(m_CellCount);
+            EditorGUILayout.PropertyField(m_CellSize);
             EditorGUILayout.PropertyField(m_Padding);
 
             EditorGUILayout.PropertyField(m_MovementType);

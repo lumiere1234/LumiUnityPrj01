@@ -242,5 +242,89 @@ namespace UnityEngine.UI
 
             return root;
         }
+
+        /// <summary>
+        /// Create the basic UI ScrollList.
+        /// </summary>
+        /// <remarks>
+        /// Hierarchy:
+        /// (root)
+        ///     ScrollList
+        ///         - Viewport
+        ///             - Content -- grid
+        ///         - Scrollbar Horizontal
+        ///             - Sliding Area
+        ///                 - Handle
+        ///         - Scrollbar Vertical
+        ///             - Sliding Area
+        ///                 - Handle
+        /// </remarks>
+        /// <param name="resources">The resources to use for creation.</param>
+        /// <returns>The root GameObject of the created element.</returns>
+        public static GameObject CreateLumiScrollGrid(Resources resources)
+        {
+            GameObject root = CreateUIElementRoot("ScrollGrid", new Vector2(200, 200), typeof(Image), typeof(LumiScrollGrid));
+
+            GameObject viewport = CreateUIObject("Viewport", root, typeof(Image), typeof(Mask));
+            GameObject content = CreateUIObject("Panel", viewport, typeof(RectTransform));
+            // Sub controls.
+            GameObject hScrollbar = CreateScrollbar(resources);
+            hScrollbar.name = "Scrollbar Horizontal";
+            SetParentAndAlign(hScrollbar, root);
+            RectTransform hScrollbarRT = hScrollbar.GetComponent<RectTransform>();
+            hScrollbarRT.anchorMin = Vector2.zero;
+            hScrollbarRT.anchorMax = Vector2.right;
+            hScrollbarRT.pivot = Vector2.zero;
+            hScrollbarRT.sizeDelta = new Vector2(0, hScrollbarRT.sizeDelta.y);
+
+            GameObject vScrollbar = CreateScrollbar(resources);
+            vScrollbar.name = "Scrollbar Vertical";
+            SetParentAndAlign(vScrollbar, root);
+            vScrollbar.GetComponent<Scrollbar>().SetDirection(Scrollbar.Direction.BottomToTop, true);
+            RectTransform vScrollbarRT = vScrollbar.GetComponent<RectTransform>();
+            vScrollbarRT.anchorMin = Vector2.right;
+            vScrollbarRT.anchorMax = Vector2.one;
+            vScrollbarRT.pivot = Vector2.one;
+            vScrollbarRT.sizeDelta = new Vector2(vScrollbarRT.sizeDelta.x, 0);
+
+            // Setup RectTransforms.
+            // Make viewport fill entire scroll view.
+            RectTransform viewportRT = viewport.GetComponent<RectTransform>();
+            viewportRT.anchorMin = Vector2.zero;
+            viewportRT.anchorMax = Vector2.one;
+            viewportRT.sizeDelta = Vector2.zero;
+            viewportRT.pivot = Vector2.up;
+            // Make context match viewpoprt width and be somewhat taller.
+            // This will show the vertical scrollbar and not the horizontal one.
+            RectTransform contentRT = content.GetComponent<RectTransform>();
+            contentRT.anchorMin = Vector2.up;
+            contentRT.anchorMax = Vector2.one;
+            contentRT.sizeDelta = new Vector2(0, 300);
+            contentRT.pivot = Vector2.up;
+            // Setup UI components.
+            ScrollRect scrollRect = root.GetComponent<ScrollRect>();
+            scrollRect.content = contentRT;
+            scrollRect.viewport = viewportRT;
+            scrollRect.horizontalScrollbar = hScrollbar.GetComponent<Scrollbar>();
+            scrollRect.verticalScrollbar = vScrollbar.GetComponent<Scrollbar>();
+            scrollRect.horizontalScrollbarVisibility = ScrollRect.ScrollbarVisibility.AutoHideAndExpandViewport;
+            scrollRect.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.AutoHideAndExpandViewport;
+            scrollRect.horizontalScrollbarSpacing = -3;
+            scrollRect.verticalScrollbarSpacing = -3;
+
+            Image rootImage = root.GetComponent<Image>();
+            rootImage.sprite = resources.background;
+            rootImage.type = Image.Type.Sliced;
+            rootImage.color = s_PanelColor;
+
+            Mask viewportMask = viewport.GetComponent<Mask>();
+            viewportMask.showMaskGraphic = false;
+
+            Image viewportImage = viewport.GetComponent<Image>();
+            viewportImage.sprite = resources.mask;
+            viewportImage.type = Image.Type.Sliced;
+
+            return root;
+        }
     }
 }

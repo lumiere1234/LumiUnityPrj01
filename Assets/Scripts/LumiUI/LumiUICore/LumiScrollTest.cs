@@ -6,14 +6,17 @@ using UnityEngine.UI;
 public class LumiScrollTest : MonoBehaviour
 {
     [SerializeField] private LumiScrollList scrollList;
+    [SerializeField] private LumiScrollGrid scrollGrid;
+    [SerializeField] private Button btnItem;
     private void Awake()
     {
         scrollList.SetScrollListUpdateFunc(UpdateScrollItem);
+        scrollGrid.SetScrollGridUpdateFunc(UpdateScrollItem);
     }
     // Start is called before the first frame update
     void Start()
     {
-        RefreshScrollList();    
+        RefreshScrollList();
     }
 
     void RefreshScrollList()
@@ -21,12 +24,22 @@ public class LumiScrollTest : MonoBehaviour
         int count = 40;
         scrollList.AddItems(0, count);
         scrollList.DoForceUpdate(true);
+        scrollGrid.AddItems(0, 40);
+        scrollGrid.DoForceUpdate(true);
     }
 
-    void UpdateScrollItem(LumiScrollItem item, int index)
+    void UpdateScrollItem(LumiScrollItem item, int index, int typeId)
     {
         //Debug.Log($"lumiere index : {index}");
         item.bInitial = true;
+
+        Button btn = item.gameObject.GetComponent<Button>();
+        if (btn != null ) {
+            btn.onClick.RemoveAllListeners();
+            btn.onClick.AddListener(() => {
+                Debug.Log($"Lumiere get {index}");
+            });
+        }
 
         LumiTestItem tItem = (LumiTestItem)item;
         tItem.UpdateData(index);

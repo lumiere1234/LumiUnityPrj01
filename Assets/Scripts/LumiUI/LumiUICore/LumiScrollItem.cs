@@ -33,5 +33,13 @@ namespace UnityEngine.UI
         {
         
         }
+
+        public void RescaleScrollGridItem(Vector2 cellSize)
+        { 
+            float factorX = cellSize.x / Width;
+            float factorY = cellSize.y / Height;
+            float scale = Mathf.Min(factorY, factorX);
+            transform.localScale = Vector3.one * scale;
+        }
     }
 }
