@@ -23,6 +23,10 @@ public class LumiScrollTest : MonoBehaviour
     {
         int count = 40;
         scrollList.AddItems(0, count);
+        scrollList.AddItems(1, 5);
+        scrollList.AddItems(0, 5);
+        scrollList.AddItems(1, 5);
+        scrollList.AddItems(0, 5);
         scrollList.DoForceUpdate(true);
         scrollGrid.AddItems(0, 40);
         scrollGrid.DoForceUpdate(true);

@@ -32,7 +32,7 @@ public class SceneMgr : SingletonAutoMono<SceneMgr>
             ResManager.GetInstance().LoadScene(sceneName, () => {
                 DoAfterLoadScene();
                 EventMgr.GetInstance().Invoke(EventDef.SceneLoadCompleteEvent);
-                EventMgr.GetInstance().Invoke(EventDef.LoadingStreamCompleteEvent, BitDef.LoadingScene);
+                EventMgr.GetInstance().Invoke(EventDef.Scene_LoadingTaskComplete, BitDef.LoadingScene);
                 callBack?.Invoke();
                 });
         }
@@ -56,7 +56,7 @@ public class SceneMgr : SingletonAutoMono<SceneMgr>
         string[] atlasList = curSceneCfg.loadingAtlas;
         if (atlasList != null && atlasList.Length > 0)
         {
-            EventMgr.Instance.Invoke(EventDef.LoadingStreamAddTaskEvent, BitDef.LoadingAtlas);
+            EventMgr.Instance.Invoke(EventDef.Scene_LoadingTaskAdd, BitDef.LoadingAtlas);
             ResManager.Instance.DoPreloadSpriteAtlas(atlasList);
         }
     }
@@ -68,7 +68,7 @@ public class SceneMgr : SingletonAutoMono<SceneMgr>
         {
             factor |= BitDef.LoadingUI;
         }
-        EventMgr.Instance.Invoke(EventDef.LoadingStreamAddTaskEvent, factor);
+        EventMgr.Instance.Invoke(EventDef.Scene_LoadingTaskAdd, factor);
     }
     private void DoAfterLoadScene()
     {
@@ -101,7 +101,7 @@ public class SceneMgr : SingletonAutoMono<SceneMgr>
         if (curSceneCfg.defaultUIList != null)
         {
             _loadUICount = curSceneCfg.defaultUIList.Length;
-            EventMgr.Instance.Invoke(EventDef.LoadingStreamAddTaskEvent, BitDef.LoadingUI);
+            EventMgr.Instance.Invoke(EventDef.Scene_LoadingTaskAdd, BitDef.LoadingUI);
             foreach (var ui in curSceneCfg.defaultUIList)
             {
                 var param = new UILoadParams();
@@ -117,7 +117,7 @@ public class SceneMgr : SingletonAutoMono<SceneMgr>
             _loadUICount--;
             if (_loadUICount == 0)
             {
-                EventMgr.Instance.Invoke(EventDef.LoadingStreamCompleteEvent, BitDef.LoadingUI);
+                EventMgr.Instance.Invoke(EventDef.Scene_LoadingTaskComplete, BitDef.LoadingUI);
             }
         }
     }

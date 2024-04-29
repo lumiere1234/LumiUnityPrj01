@@ -13,14 +13,14 @@ public class UISceneLoadingPanel : BasePanel
     protected override void RegistCustomEvent()
     {
         base.RegistCustomEvent();
-        EventMgr.Instance.Register(EventDef.LoadingStreamCompleteEvent, OnSceneTaskCompleteEvent);
-        EventMgr.Instance.Register(EventDef.LoadingStreamAddTaskEvent, OnAddTaskStatusEvent);
+        EventMgr.Instance.Register(EventDef.Scene_LoadingTaskComplete, OnSceneTaskCompleteEvent);
+        EventMgr.Instance.Register(EventDef.Scene_LoadingTaskAdd, OnAddTaskStatusEvent);
     }
     protected override void UnregistCustomEvent()
     {
         base.UnregistCustomEvent();
-        EventMgr.Instance.UnRegister(EventDef.LoadingStreamCompleteEvent, OnSceneTaskCompleteEvent);
-        EventMgr.Instance.UnRegister(EventDef.LoadingStreamAddTaskEvent, OnAddTaskStatusEvent);
+        EventMgr.Instance.UnRegister(EventDef.Scene_LoadingTaskComplete, OnSceneTaskCompleteEvent);
+        EventMgr.Instance.UnRegister(EventDef.Scene_LoadingTaskAdd, OnAddTaskStatusEvent);
     }
     public override void DoShowPanel(params object[] args)
     {

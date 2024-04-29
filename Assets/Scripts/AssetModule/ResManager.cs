@@ -289,7 +289,7 @@ namespace CoreManager
         {
             if (names == null)
             {
-                EventMgr.Instance.Invoke(EventDef.LoadingStreamCompleteEvent, BitDef.LoadingAtlas);
+                EventMgr.Instance.Invoke(EventDef.Scene_LoadingTaskComplete, BitDef.LoadingAtlas);
                 yield break;
             }
             int count = names.Length;
@@ -306,7 +306,7 @@ namespace CoreManager
                 });
             }
             yield return new WaitUntil(() => count == 0);
-            EventMgr.Instance.Invoke(EventDef.LoadingStreamCompleteEvent, BitDef.LoadingAtlas);
+            EventMgr.Instance.Invoke(EventDef.Scene_LoadingTaskComplete, BitDef.LoadingAtlas);
         }
         private void ReadImageRelationLine(string strLine)
         {

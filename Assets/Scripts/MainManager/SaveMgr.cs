@@ -10,6 +10,7 @@ public class SaveDataInfo
     public int saveId = -1;
     public List<CharaCardSaveData> cardList = new List<CharaCardSaveData>();
     public GameMainSaveData gameData = null;
+    public List<ItemSaveData> itemList = new List<ItemSaveData>();
 }
 [Serializable]
 public class CharaCardSaveData
@@ -23,6 +24,12 @@ public class GameMainSaveData
     public string playerId;
     public string playerName;
     public int showHeroineId;
+}
+[Serializable]
+public class ItemSaveData
+{
+    public int itemId;
+    public int itemCount;
 }
 
 /// <summary>
@@ -92,6 +99,7 @@ public class SaveMgr : SingletonAutoMono<SaveMgr>
         saveInfo = new SaveDataInfo();
         saveInfo.saveId = index;
         DataMgr.Instance.DoAddSaveData(ref saveInfo);
+        CharaCardMgr.Instance.DoAddSaveData(ref saveInfo);
         // setdefault id
         GameMgr.Instance.defaultSaveId = index;
         // save data
@@ -108,6 +116,7 @@ public class SaveMgr : SingletonAutoMono<SaveMgr>
         
         // load data
         DataMgr.Instance.DoLoadSaveData(saveInfo);
+        CharaCardMgr.Instance.DoLoadSaveData(saveInfo);
 
         // 是否成功初始化
         return saveInfo.saveId >= 0;

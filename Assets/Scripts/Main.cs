@@ -30,11 +30,12 @@ public class Main : MonoBehaviour
     void ShowLoadingPanel()
     {
         UILoading01Panel.Show();
-        EventMgr.Instance.Invoke(EventDef.LoadingStreamAddTaskEvent, BitDef.LoadingAtlas | BitDef.LoadingScene);
+        EventMgr.Instance.Invoke(EventDef.Scene_LoadingTaskAdd, BitDef.LoadingAtlas | BitDef.LoadingScene);
     }
     // 初始化数据结构
     void InitData()
     {
+        DataMgr.Instance.Initial();
         GameMgr.Instance.Initial();
         WorldMgr.Instance.Initial();
         InputMgr.Instance.Initial();

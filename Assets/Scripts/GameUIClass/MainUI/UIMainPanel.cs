@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using CoreManager;
 
 public class UIMainPanel : BasePanel
 {
@@ -36,7 +35,7 @@ public class UIMainPanel : BasePanel
     protected override void RegistCustomEvent()
     {
         base.RegistCustomEvent();
-        EventMgr.Instance.Register(EventDef.ChangeMainHeroineId, OnChangeMainHeroineEvent);
+        EventMgr.Instance.Register(EventDef.Main_ChangeDisplayHeroine, OnChangeMainHeroineEvent);
     }
     public override void DoShowPanel(params object[] args)
     {

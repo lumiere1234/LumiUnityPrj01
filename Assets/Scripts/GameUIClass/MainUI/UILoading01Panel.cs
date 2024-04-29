@@ -21,8 +21,8 @@ public class UILoading01Panel : MonoBehaviour
     }
     private void Awake()
     {
-        EventMgr.Instance.Register(EventDef.LoadingStreamCompleteEvent, OnCompleteStatusEvent);
-        EventMgr.Instance.Register(EventDef.LoadingStreamAddTaskEvent, OnAddTaskStatusEvent);
+        EventMgr.Instance.Register(EventDef.Scene_LoadingTaskComplete, OnCompleteStatusEvent);
+        EventMgr.Instance.Register(EventDef.Scene_LoadingTaskAdd, OnAddTaskStatusEvent);
     }
     public static void Hide()
     {
@@ -47,8 +47,8 @@ public class UILoading01Panel : MonoBehaviour
     private void OnDestroy()
     {
         NeedBit = -1;
-        EventMgr.Instance.UnRegister(EventDef.LoadingStreamAddTaskEvent, OnAddTaskStatusEvent);
-        EventMgr.Instance.UnRegister(EventDef.LoadingStreamCompleteEvent, OnCompleteStatusEvent);
+        EventMgr.Instance.UnRegister(EventDef.Scene_LoadingTaskAdd, OnAddTaskStatusEvent);
+        EventMgr.Instance.UnRegister(EventDef.Scene_LoadingTaskComplete, OnCompleteStatusEvent);
     }
     private void SetTask(int id)
     {

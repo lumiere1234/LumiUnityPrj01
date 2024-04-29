@@ -75,12 +75,13 @@ namespace UnityEngine.UI
             else
                 return new Vector2(0, bInsert ? CellSize.y + Padding.y : -CellSize.y - Padding.y);
         }
-        private int MaxCellCount => (int)(viewportLength / (contentTarget + CurrentLength) + 2);
+        private int MaxCellCount => (int)(viewportLength / (MainCellLength + MainPadding) + 2);
         //bool isOverLength => contentTarget + CurrentLength > viewportLength;
         public void ResetList()
         {
             m_headLine = 0;
             content.anchoredPosition = Vector2.zero;
+            RecycleAllItems();
             itemTypeList.Clear();
         }
         public void SetScrollGridUpdateFunc(Action<LumiScrollItem, int, int> callback)
@@ -127,7 +128,7 @@ namespace UnityEngine.UI
             for (int i = 0; i < count; i++)
             {
                 itemTypeList.Add(index);
-                int mainLength = m_itemList.Count / CellCount;
+                int mainLength = (m_itemList.Count - 1) / CellCount;
                 if ((mainLength < MaxCellCount) && isUpdating)
                 {
                     var item = GetScrollItem(index);
@@ -143,8 +144,8 @@ namespace UnityEngine.UI
             RecycleAllItems();
             for (int i = m_headLine * CellCount; i < itemTypeList.Count; i++)
             {
-                int mainId = m_itemList.Count % CellCount;
-                if ((mainId < MaxCellCount) && isUpdating)
+                int mainLength = (m_itemList.Count - 1) / CellCount;
+                if ((mainLength < MaxCellCount) && isUpdating)
                 {
                     var item = GetScrollItem(itemTypeList[i]);
                     item.CurrentRect.anchoredPosition = GetGridPos(m_itemList.Count);
@@ -314,7 +315,7 @@ namespace UnityEngine.UI
                 || (bHorizontal && CurrentLength + contentTarget < viewportLength + factor))
             {
                 // 没有可以添加的
-                if (m_itemList.Count + m_headLine * CellCount >= itemTypeList.Count) return false;
+                if ((m_itemList.Count - 1) / CellCount + m_headLine >= (itemTypeList.Count - 1)/CellCount) return false;
 
                 InsertLine(m_headLine + (m_itemList.Count - 1) / CellCount + 1, false);
                 UpdateContent();

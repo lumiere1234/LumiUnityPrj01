@@ -1,0 +1,7 @@
+﻿ExcelName: CharaCard.xlsx
+sn;typeName;typeSingleName;
+int;string;string;
+1;Sword;S;
+2;Spear;P;
+3;Magic;M;
+4;Arrow;A;

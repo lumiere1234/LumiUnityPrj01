@@ -23,11 +23,15 @@ public class DataMgr : SingletonAutoMono<DataMgr>
             if (value != _curMainHeroineId)
             {
                 _curMainHeroineId = value;
-                EventMgr.Instance.Invoke(EventDef.ChangeMainHeroineId);
+                EventMgr.Instance.Invoke(EventDef.Main_ChangeDisplayHeroine);
             }
         }
     }
-
+    
+    public void Initial()
+    {
+        
+    }
     public void DoAddSaveData(ref SaveDataInfo info)
     {
         var gameData = new GameMainSaveData();

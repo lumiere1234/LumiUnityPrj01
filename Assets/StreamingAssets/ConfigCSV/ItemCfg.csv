@@ -1,0 +1,5 @@
+﻿ExcelName: Item.xlsx
+sn;name;desc;itemType;useFunc;
+int;string;string;int;string;
+1000001;Coin;货币 金币;1;;
+1000002;Crystal;货币 水晶;1;;

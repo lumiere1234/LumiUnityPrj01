@@ -31,7 +31,7 @@ public class GameMgr : SingletonAutoMono<GameMgr>
     }
     public void Initial()
     {
-
+        
     }
     public void BackToMainScene(Action callBack = null)
     {
