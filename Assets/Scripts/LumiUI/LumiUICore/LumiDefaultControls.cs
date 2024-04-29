@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEngine;
+using Resources = UnityEngine.UI.DefaultControls.Resources;
 
 namespace UnityEngine.UI
 {
@@ -24,57 +24,16 @@ namespace UnityEngine.UI
             GameObject CreateGameObject(string name, params Type[] components);
         }
 
-        /// <summary>
-        /// Object used to pass resources to use for the default controls.
-        /// </summary>
-        public struct Resources
-        {
-            /// <summary>
-            /// The primary sprite to be used for graphical UI elements, used by the button, toggle, and dropdown controls, among others.
-            /// </summary>
-            public Sprite standard;
-
-            /// <summary>
-            /// Sprite used for background elements.
-            /// </summary>
-            public Sprite background;
-
-            /// <summary>
-            /// Sprite used as background for input fields.
-            /// </summary>
-            public Sprite inputField;
-
-            /// <summary>
-            /// Sprite used for knobs that can be dragged, such as on a slider.
-            /// </summary>
-            public Sprite knob;
-
-            /// <summary>
-            /// Sprite used for representation of an "on" state when present, such as a checkmark.
-            /// </summary>
-            public Sprite checkmark;
-
-            /// <summary>
-            /// Sprite used to indicate that a button will open a dropdown when clicked.
-            /// </summary>
-            public Sprite dropdown;
-
-            /// <summary>
-            /// Sprite used for masking purposes, for example to be used for the viewport of a scroll view.
-            /// </summary>
-            public Sprite mask;
-        }
-
         private const float kWidth = 160f;
         private const float kThickHeight = 30f;
         private const float kThinHeight = 20f;
         private static Vector2 s_ThickElementSize = new Vector2(kWidth, kThickHeight);
         private static Vector2 s_ThinElementSize = new Vector2(kWidth, kThinHeight);
+        private static Vector2 s_ToggleSize = new Vector2(160f, 50f);
         private static Vector2 s_ImageElementSize = new Vector2(100f, 100f);
         private static Color s_DefaultSelectableColor = new Color(1f, 1f, 1f, 1f);
         private static Color s_PanelColor = new Color(1f, 1f, 1f, 0.392f);
         private static Color s_TextColor = new Color(50f / 255f, 50f / 255f, 50f / 255f, 1f);
-
         private class DefaultRuntimeFactory : IFactoryControls
         {
             public static IFactoryControls Default = new DefaultRuntimeFactory();
@@ -125,7 +84,7 @@ namespace UnityEngine.UI
             colors.pressedColor = new Color(0.698f, 0.698f, 0.698f);
             colors.disabledColor = new Color(0.521f, 0.521f, 0.521f);
         }
-        public static GameObject CreateScrollbar(Resources resources)
+        public static GameObject CreateScrollbar(DefaultControls.Resources resources)
         {
             // Create GOs Hierarchy
             GameObject scrollbarRoot = CreateUIElementRoot("Scrollbar", s_ThinElementSize, typeof(Image), typeof(Scrollbar));
@@ -177,7 +136,7 @@ namespace UnityEngine.UI
         /// </remarks>
         /// <param name="resources">The resources to use for creation.</param>
         /// <returns>The root GameObject of the created element.</returns>
-        public static GameObject CreateLumiScrollList(Resources resources)
+        public static GameObject CreateLumiScrollList(DefaultControls.Resources resources)
         {
             GameObject root = CreateUIElementRoot("ScrollList", new Vector2(200, 200), typeof(Image), typeof(LumiScrollList));
 
@@ -261,7 +220,7 @@ namespace UnityEngine.UI
         /// </remarks>
         /// <param name="resources">The resources to use for creation.</param>
         /// <returns>The root GameObject of the created element.</returns>
-        public static GameObject CreateLumiScrollGrid(Resources resources)
+        public static GameObject CreateLumiScrollGrid(DefaultControls.Resources resources)
         {
             GameObject root = CreateUIElementRoot("ScrollGrid", new Vector2(200, 200), typeof(Image), typeof(LumiScrollGrid));
 
@@ -325,6 +284,45 @@ namespace UnityEngine.UI
             viewportImage.type = Image.Type.Sliced;
 
             return root;
+        }
+        public static GameObject CreateLumiImageToggle(DefaultControls.Resources resources)
+        {
+            // Set up hierarchy
+            GameObject toggleRoot = CreateUIElementRoot("Toggle", s_ToggleSize, typeof(Toggle));
+
+            GameObject background = CreateUIObject("Background", toggleRoot, typeof(Image));
+            GameObject checkmark = CreateUIObject("Checkmark", background, typeof(Image));
+
+            // Set up components
+            Toggle toggle = toggleRoot.GetComponent<Toggle>();
+            toggle.isOn = true;
+
+            Image bgImage = background.GetComponent<Image>();
+            bgImage.sprite = resources.standard;
+            bgImage.type = Image.Type.Sliced;
+            bgImage.color = s_DefaultSelectableColor;
+
+            Image checkmarkImage = checkmark.GetComponent<Image>();
+            checkmarkImage.sprite = resources.checkmark;
+
+            toggle.graphic = checkmarkImage;
+            toggle.targetGraphic = bgImage;
+            SetDefaultColorTransitionValues(toggle);
+
+            RectTransform bgRect = background.GetComponent<RectTransform>();
+            bgRect.anchorMin = new Vector2(0.5f, 0.5f);
+            bgRect.anchorMax = new Vector2(0.5f, 0.5f);
+            bgRect.pivot = new Vector2(0.5f, 0.5f);
+            bgRect.anchoredPosition = Vector2.zero;
+            bgRect.sizeDelta = s_ToggleSize;
+
+            RectTransform checkmarkRect = checkmark.GetComponent<RectTransform>();
+            checkmarkRect.anchorMin = new Vector2(0.5f, 0.5f);
+            checkmarkRect.anchorMax = new Vector2(0.5f, 0.5f);
+            checkmarkRect.anchoredPosition = Vector2.zero;
+            checkmarkRect.sizeDelta = s_ToggleSize;
+
+            return toggleRoot;
         }
     }
 }

@@ -6,6 +6,7 @@ public class UIMainPanel : BasePanel
 {
     [SerializeField] private Button BtnEnter;
     [SerializeField] private Button BtnChara;
+    [SerializeField] private Button BtnTeam;
     [SerializeField] private TMP_Text LblLevelTitle;
     [SerializeField] private TMP_Text LblLevel;
     [SerializeField] private TMP_Text LblChara;
@@ -31,6 +32,7 @@ public class UIMainPanel : BasePanel
         base.Awake();
         BtnEnter.onClick.AddListener(OnClickBtnEnter);
         BtnChara.onClick.AddListener(OnClickBtnChara);
+        BtnTeam.onClick.AddListener(OnClickBtnTeam);
     }
     protected override void RegistCustomEvent()
     {
@@ -68,6 +70,12 @@ public class UIMainPanel : BasePanel
         UIMgr.Instance.HidePanel(uiName);
     }
     private void OnClickBtnChara()
+    {
+        UIMgr.Instance.ShowPanel(UIDef.UICharaShowPanel);
+        UIMgr.Instance.SaveFullPanelStack(uiName);
+        UIMgr.Instance.HidePanel(uiName);
+    }
+    private void OnClickBtnTeam()
     {
         UIMgr.Instance.ShowPanel(UIDef.UICharaShowPanel);
         UIMgr.Instance.SaveFullPanelStack(uiName);

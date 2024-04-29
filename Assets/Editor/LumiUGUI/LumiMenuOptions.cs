@@ -16,6 +16,7 @@ namespace UnityEditor.LumiUI
             // 3001 
             LumiScrollList = 3001, // 滑动列表
             LumiScrollGrid = 3002, // 滑动网格
+            ImageToggle = 3003, // 图片按钮
         }
 
         private const string kUILayerName = "UI";
@@ -36,8 +37,8 @@ namespace UnityEditor.LumiUI
                 return ObjectFactory.CreateGameObject(name, components);
             }
         }
-        static private LumiDefaultControls.Resources s_StandardResources;
-        static private LumiDefaultControls.Resources GetStandardResources()
+        static private DefaultControls.Resources s_StandardResources;
+        static private DefaultControls.Resources GetStandardResources()
         {
             if (s_StandardResources.standard == null)
             {
@@ -245,6 +246,14 @@ namespace UnityEditor.LumiUI
             GameObject go;
             using (new FactorySwapToEditor())
                 go = LumiDefaultControls.CreateLumiScrollGrid(GetStandardResources());
+            PlaceUIElementRoot(go, menuCommand);
+        }
+        [MenuItem("GameObject/UI/Image Toggle", false, (int)LumiMenuOptionsPriorityOrder.ImageToggle)]
+        static public void AddLumiImageToggle(MenuCommand menuCommand)
+        {
+            GameObject go;
+            using (new FactorySwapToEditor())
+                go = LumiDefaultControls.CreateLumiImageToggle(GetStandardResources());
             PlaceUIElementRoot(go, menuCommand);
         }
         private static void CreateEventSystem(bool select, GameObject parent)
