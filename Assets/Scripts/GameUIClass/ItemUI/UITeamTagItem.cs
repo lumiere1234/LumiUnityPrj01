@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UITeamTagItem : MonoBehaviour
+public class UITeamTagItem : LumiScrollItem
 {
     [SerializeField] private Toggle TeamTag;
     [SerializeField] private TMPro.TMP_Text LblName;

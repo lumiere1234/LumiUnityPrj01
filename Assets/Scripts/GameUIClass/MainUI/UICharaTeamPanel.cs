@@ -9,21 +9,22 @@ public class UICharaTeamPanel : BasePanel
     [SerializeField] private LumiScrollList TagList;
 
     int currentId = 0;
-    List<string> tags = new List<string>();
-    private void Awake()
+    int maxteamcount = 5;
+    protected override void Awake()
     {
         TagList.SetScrollListUpdateFunc(OnScrollListUpdateFunc);
-        tags.Add("lumi01");
-        tags.Add("lumi02");
-        tags.Add("lumi03");
-        tags.Add("lumi04");
-        tags.Add("lumi05");
         currentId = 0;
+    }
+    public override void DoShowPanel(params object[] args)
+    {
+        base.DoShowPanel(args);
+
+        RefreshPanel();
     }
     private void RefreshPanel()
     {
         TagList.ResetList();
-        TagList.AddItems(0, tags.Count);
+        TagList.AddItems(0, maxteamcount);
         TagList.DoForceUpdate(true);
     }
     private void OnScrollListUpdateFunc(LumiScrollItem item, int index, int typeId)
@@ -31,6 +32,6 @@ public class UICharaTeamPanel : BasePanel
         UITeamTagItem tagItem = item.GetComponent<UITeamTagItem>();
         if (tagItem == null)
             return;
-
+        tagItem.SetName(StringDef.TeamPanelTagPrefix + $"{index : 00}");
     }
 }

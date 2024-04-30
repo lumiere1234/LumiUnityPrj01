@@ -15,4 +15,5 @@ public static class UIDef
     public const string UILevelSelectPanel = "UI-LevelSelectPanel";
     public const string UIConfirmTIps = "UI-ConfirmTips";
     public const string UILevelBackPanel = "UI-LevelBackPanel";
+    public const string UICharaTeamPanel = "UI-CharaTeamPanel";
 }

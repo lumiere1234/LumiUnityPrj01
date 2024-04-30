@@ -77,7 +77,7 @@ public class UIMainPanel : BasePanel
     }
     private void OnClickBtnTeam()
     {
-        UIMgr.Instance.ShowPanel(UIDef.UICharaShowPanel);
+        UIMgr.Instance.ShowPanel(UIDef.UICharaTeamPanel);
         UIMgr.Instance.SaveFullPanelStack(uiName);
         UIMgr.Instance.HidePanel(uiName);
     }

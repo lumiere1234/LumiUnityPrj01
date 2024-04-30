@@ -271,6 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2522a24a70847fc438638dc6612147ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bInitial: 0
   TeamTag: {fileID: 2164226966696623465}
   LblName: {fileID: 5871715825919764152}
 --- !u!1 &2035808629577885158
@@ -964,6 +965,7 @@ GameObject:
   - component: {fileID: 5252558086396230000}
   - component: {fileID: 7194578963585173890}
   - component: {fileID: 457831728736745738}
+  - component: {fileID: 3068657025736743562}
   m_Layer: 5
   m_Name: UI-CharaTeamPanel
   m_TagString: Untagged
@@ -1068,6 +1070,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3068657025736743562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4659584663585196227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88ccad6ec9e176d4585c46b055aacdd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TagList: {fileID: 806766933427029741}
 --- !u!1 &7452084859308714565
 GameObject:
   m_ObjectHideFlags: 0
@@ -1251,7 +1266,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_ScrollItems: []
+  m_ScrollItems:
+  - {fileID: 1444116360723987864}
   m_Padding: 20
 --- !u!1 &9017693753533687255
 GameObject:

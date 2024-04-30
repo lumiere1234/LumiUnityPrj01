@@ -9,6 +9,9 @@ public static class StringDef
     public static readonly string TextSpeedFactor = "TextSpeedFactor";
     public static readonly string DefaultSaveId = "DefaultSaveId";
 
+    // team
+    public static readonly string TeamPanelTagPrefix = "Team";
+
     // confirmTips
     public static readonly string TipsComfirmDefaultStr = "OK";
     public static readonly string TipsCancelDefaultStr = "Cancel";
